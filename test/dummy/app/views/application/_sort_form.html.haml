@@ -1,0 +1,7 @@
+=form_tag form_action, :method => :get, :class => "sort pull-left" do |f|
+	=hidden_inputs
+	
+	&nbsp;
+	= label_tag :sort_by
+	= select_tag :sort_by, 
+			options_for_select(opts, params[:sort_by]), :onchange => "submit()"
