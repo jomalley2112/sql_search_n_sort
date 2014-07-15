@@ -12,7 +12,25 @@ Usage:
 
 	In view file for page to include search functionality add the following code in the position where you want the sort select to be located: `= render 'sql_sort'`
 
-	In controller action (usually #index) you would add the following if we  the model was named Person:
-	`@people = Person.sql_search(params[:search_for]).sql_sort(params[:sort_by])`
+	In controller action (usually #index) you would add the following if the model was named Person:
+	Search & Sort:
+	`@people = Person.sql_search(params[:search_for]).sql_sort(@sort_by, (@sort_dir || :asc))`
+	Only Sort:
+	`@people = Person.sql_sort(@sort_by, (@sort_dir || :asc))`
+
+	Example:
+		class Person < ActiveRecord::Base
+			extend SqlSearchableSortable
+			sql_searchable :first_name, :last_name
+			sql_sortable 	 :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"}
+			
+			default_sql_sort :last_name
+		end
+
+	FILES:
+		app/views/application/_sort_form.html.haml
+		Add method def to app/controllers/application_controller.rb
+		lib/sql_search_n_sort/sql_searchable_sortable.rb (does this need to be copied to models/concerns or is it
+			just available because its in the lib dir of the gem???)
 
 This project uses MIT-LICENSE.

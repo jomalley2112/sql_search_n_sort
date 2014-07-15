@@ -1,0 +1,19 @@
+require 'spec_helper'
+
+describe Vehicle do
+  describe "sort" do
+    describe "sortable options" do
+			describe "sort helpers" do
+			  it "returns an array of arrays to populate the sort dropdown" do
+			  	Vehicle.sort_cols_for_dropdown
+			  		.should eq [["Year", "year"],
+								       ["Year [desc]", "year desc"],
+								       ["Model", "model"],
+								       ["Model [desc]", "model desc"],
+								       ["Make", "manufacturer"],
+								       ["Make [desc]", "manufacturer desc"]]
+			  end
+			end  
+		end
+  end
+end
