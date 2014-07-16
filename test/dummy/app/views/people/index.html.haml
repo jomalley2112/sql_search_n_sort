@@ -2,10 +2,11 @@
 %table
 	%thead
 		%tr
-			%td.sort-by{:colspan => 6, :style => "padding-bottom: 15px;"}
+			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
 				-hidden_inputs_str = "" #hidden_field_tag :query, params[:query]
-				=render :partial => "application/sort_form", :locals => {:form_action => people_path, :opts => @sort_opts, :hidden_inputs => hidden_inputs_str}
-		
+				=render :partial => "application/sort_form", :locals => {:form_action => people_path, :opts => @sort_dropdown_opts, :hidden_inputs => hidden_inputs_str}
+			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
+				=render :partial => "application/search_form", :locals => {:form_action => people_path, :hidden_inputs => ""}
 		%tr
 			%th First name
 			%th Last name
