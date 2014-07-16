@@ -63,9 +63,9 @@ describe Person do
 			it "does not sort by age because it is not specified as searchable in the model" do
 				expect(same_order?(Person, :age, @people)).to be false
 			end
-			it "quietly uses default sort when passing an invalid column name " do
+			it "quietly uses default sort column (last name) when passing an invalid column name " do
 				Person.sql_sort(:invalid_column_name, :asc).map { |e| e.send(:last_name) }.uniq
-					.should eq Person.all.map { |e| e.send(:last_name) }.uniq
+					.should eq Person.order(:last_name).map { |e| e.send(:last_name) }.uniq
 			end
 			
 			describe "sortable options" do
