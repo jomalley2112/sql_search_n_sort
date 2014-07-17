@@ -99,12 +99,12 @@ describe Person do
   			results.map { |e| e.first_name }.uniq 
       		.should eq results.sort_by{ |p| p.first_name }.map { |e| e.first_name }.uniq
   		end
-  		describe "default scope order" do
-  		  it "returns inconsistent results when sql_sort is called after sql_search" do
-  		  	Person.sql_sort(:first_name).sql_search("John_1")
-  		  		.should_not eq Person.sql_search("John_1").sql_sort(:first_name)
-  		  end
-  		end
+  		
+		  it "returns consistent results when sql_sort is called after sql_search" do
+		  	Person.sql_sort(:first_name).sql_search("John_1")
+		  		.should eq Person.sql_search("John_1").sql_sort(:first_name)
+		  end
+		
 		end
 
 	end

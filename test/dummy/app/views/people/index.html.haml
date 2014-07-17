@@ -3,10 +3,9 @@
 	%thead
 		%tr
 			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
-				-hidden_inputs_str = "" #hidden_field_tag :query, params[:query]
-				=render :partial => "application/sort_form", :locals => {:form_action => people_path, :opts => @sort_dropdown_opts, :hidden_inputs => hidden_inputs_str}
+				=render "sort_form" #, :opts => @sort_dropdown_opts
 			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
-				=render :partial => "application/search_form", :locals => {:form_action => people_path, :hidden_inputs => ""}
+				=render "search_form"
 		%tr
 			%th First name
 			%th Last name
