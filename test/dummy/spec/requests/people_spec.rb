@@ -7,18 +7,70 @@ describe "People" do
   	# end
     
     describe "search", :js => false do
-      it "displays a search box" do
+      it "displays a search box and a find and clear button" do
       	visit people_path
       	page.should have_selector("input#search_for")
+      	page.should have_selector("button#submit-search")
+      	page.should have_selector("button#clear-search")
       end
+
+      it "clears the search", :js => true do
+      	visit people_path
+      	fill_in("search_for", :with => "Search Text")
+      	click_button("clear-search")
+      	first("input#search_for").value.should eq ""
+      end
+
+      describe "perform searches", :js => true do
+      	before(:each) do
+					FactoryGirl.create(:person, first_name: "Fred", last_name: "Bradley")
+					FactoryGirl.create(:person, first_name: "Brad", last_name: "Johnson")
+					FactoryGirl.create(:person, first_name: "John", last_name: "Williams")
+					FactoryGirl.create(:person, first_name: "Will", last_name: "Farley")
+					FactoryGirl.create(:person, first_name: "Joseph", email: "jo@brads.net")
+				end
+      	
+      	it "returns only rows that have first or last name matching case-insensitive 'brad'" do
+      		visit people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "brad")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 2 #not 3 because Joseph's email isn't searchable
+      	end
+      	it "returns only rows that have first or last name matching case-insensitive 'wIlL'" do
+      		visit people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "wIlL")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 2
+      	end
+      	it "returns only rows that have first or last name matching case-insensitive 'JO'" do
+      		visit people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "JO")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 3
+      	end
+      	it "shows all listings again when search is cleared" do
+      		visit people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "Fred")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 1
+      		click_button("clear-search")
+    			first("input#search_for").value.should eq ""
+    			first("tbody").all("tr").count.should eq 5
+      	end
+	      
+      end
+      
     end
 
     describe "sort" do
     	before(:each) do
-    		@people = []
-				(1..50).each do 
-					@people << FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
-											last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
+    		(1..50).each do 
+					FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
+						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
 				end  
     	end
     	
@@ -70,7 +122,38 @@ describe "People" do
     end
     
     describe "both search and sort" do
-      
+    	before(:each) do
+    		(1..50).each do 
+					FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
+						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
+				end  
+    	end
+      it "keeps same sort order after search", :js => true do
+      	visit people_path
+      	select("First name", :from => "sort_by")
+      	sleep 0.5
+      	first_names = all(:xpath, "//table/tbody/tr/td[1]")
+      	first_names.map(&:text).should == first_names.map(&:text).sort
+      	fill_in("search_for", :with => "john_2")
+      	click_button("submit-search")
+      	sleep 0.5
+      	find("select#sort_by").value.should eq "first_name"
+      	john_2_first_names = all(:xpath, "//table/tbody/tr/td[1]").select { |fn| fn.text.downcase == 'john_2' }
+      	john_2_first_names.map(&:text).should == john_2_first_names.map(&:text).sort
+      end
+
+      it "keeps the same search results after re-sort", :js => true do
+      	visit people_path
+      	all(:xpath, "//table/tbody/tr").count.should eq 50
+      	fill_in("search_for", :with => "john_2")
+      	click_button("submit-search")
+      	john_2_count = all(:xpath, "//table/tbody/tr").count
+      	#make sure search did indeed happen first
+      	john_2_count.should eq all(:xpath, "//table/tbody/tr/td[1]").count { |e| e.text =~ /john_2/i }
+      	select("Email [desc]", :from => "sort_by") #resubmits
+				sleep 0.5
+      	all(:xpath, "//table/tbody/tr").count.should eq john_2_count
+			end
     end
   end
 end

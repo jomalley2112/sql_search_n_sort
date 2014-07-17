@@ -7,10 +7,9 @@ module SqlSearchableSortable
   		scope :sql_search, ->(search_for) { where(search_clause(search_for)) }
 			scope :sql_sort, ->(sort_by, dir=:asc) do
 				sort_by ||= @default_sort_col
-				#binding.pry
 				#This takes care of not only column names as symbols but also as keys of hashes passed to sql_searchable
 				if  @sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
-					unscoped.order(sort_by => dir)
+					order(sort_by => dir)
 				else
 					unscoped.order(default_sort_col => dir)
 				end
@@ -25,7 +24,6 @@ module SqlSearchableSortable
 	end
 
 	def sql_searchable(*cols)
-		#attr_accessor :sql_search_cols
 		@sql_search_cols = cols
 			.select do |c| 
 				col_name = c.is_a?(Hash) ? col.keys.first.to_s : c.to_s
@@ -34,12 +32,10 @@ module SqlSearchableSortable
 	end
 
 	def sql_sortable(*cols)
-		#attr_accessor :sql_sort_cols #just add method if needed
 		@sql_sort_cols = cols
 	end
 
 	def default_sql_sort(col)
-		#attr_accessor :default_sort_col #just add method if needed
 		@default_sort_col = col
 	end
 
@@ -48,9 +44,7 @@ module SqlSearchableSortable
 		@default_sort_col
 	end
 
-#TODO: This looks like its got some kind of caching going on or something
 	def sort_cols_for_dropdown
-		# I believe we need an array of arrays for options_for_select()
 		return @sql_sort_cols.inject([]) do |m, col|
 			if col.is_a?(Hash) 
 				h = col.fetch(col.keys.first)
