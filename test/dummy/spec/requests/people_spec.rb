@@ -5,126 +5,122 @@ describe "People" do
   	# before(:each) do
   	#   (1..25).each { FactoryGirl.create(:person) }
   	# end
-    describe "ISOLATE SEARCH TESTS" do
-      describe "search", :js => false do
-	      it "displays a search box and a find and clear button" do
-	      	visit search_people_path
-	      	page.should have_selector("input#search_for")
-	      	page.should have_selector("button#submit-search")
-	      	page.should have_selector("button#clear-search")
-	      end
+    describe "search only", :js => false do
+      it "displays a search box and a find and clear button" do
+      	visit search_people_path
+      	page.should have_selector("input#search_for")
+      	page.should have_selector("button#submit-search")
+      	page.should have_selector("button#clear-search")
+      end
 
-	      it "clears the search", :js => true do
-	      	visit search_people_path
-	      	fill_in("search_for", :with => "Search Text")
-	      	click_button("clear-search")
-	      	first("input#search_for").value.should eq ""
-	      end
+      it "clears the search", :js => true do
+      	visit search_people_path
+      	fill_in("search_for", :with => "Search Text")
+      	click_button("clear-search")
+      	first("input#search_for").value.should eq ""
+      end
 
-	      describe "perform searches", :js => true do
-	      	before(:each) do
-						FactoryGirl.create(:person, first_name: "Fred", last_name: "Bradley")
-						FactoryGirl.create(:person, first_name: "Brad", last_name: "Johnson")
-						FactoryGirl.create(:person, first_name: "John", last_name: "Williams")
-						FactoryGirl.create(:person, first_name: "Will", last_name: "Farley")
-						FactoryGirl.create(:person, first_name: "Joseph", email: "jo@brads.net")
-					end
-	      	
-	      	it "returns only rows that have first or last name matching case-insensitive 'brad'" do
-	      		visit search_people_path
-		      	first("tbody").all("tr").count.should eq 5
-		      	fill_in("search_for", :with => "brad")
-	      		click_button("submit-search")
-	      		first("tbody").all("tr").count.should eq 2 #not 3 because Joseph's email isn't searchable
-	      	end
-	      	it "returns only rows that have first or last name matching case-insensitive 'wIlL'" do
-	      		visit search_people_path
-		      	first("tbody").all("tr").count.should eq 5
-		      	fill_in("search_for", :with => "wIlL")
-	      		click_button("submit-search")
-	      		first("tbody").all("tr").count.should eq 2
-	      	end
-	      	it "returns only rows that have first or last name matching case-insensitive 'JO'" do
-	      		visit search_people_path
-		      	first("tbody").all("tr").count.should eq 5
-		      	fill_in("search_for", :with => "JO")
-	      		click_button("submit-search")
-	      		first("tbody").all("tr").count.should eq 3
-	      	end
-	      	it "shows all listings again when search is cleared" do
-	      		visit search_people_path
-		      	first("tbody").all("tr").count.should eq 5
-		      	fill_in("search_for", :with => "Fred")
-		      	#binding.pry
-	      		click_button("submit-search")
-	      		first("tbody").all("tr").count.should eq 1
-	      		click_button("clear-search")
-	    			first("input#search_for").value.should eq ""
-	    			first("tbody").all("tr").count.should eq 5
-	      	end
-		      
-	      end
+      describe "perform searches", :js => true do
+      	before(:each) do
+					FactoryGirl.create(:person, first_name: "Fred", last_name: "Bradley")
+					FactoryGirl.create(:person, first_name: "Brad", last_name: "Johnson")
+					FactoryGirl.create(:person, first_name: "John", last_name: "Williams")
+					FactoryGirl.create(:person, first_name: "Will", last_name: "Farley")
+					FactoryGirl.create(:person, first_name: "Joseph", email: "jo@brads.net")
+				end
+      	
+      	it "returns only rows that have first or last name matching case-insensitive 'brad'" do
+      		visit search_people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "brad")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 2 #not 3 because Joseph's email isn't searchable
+      	end
+      	it "returns only rows that have first or last name matching case-insensitive 'wIlL'" do
+      		visit search_people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "wIlL")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 2
+      	end
+      	it "returns only rows that have first or last name matching case-insensitive 'JO'" do
+      		visit search_people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "JO")
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 3
+      	end
+      	it "shows all listings again when search is cleared" do
+      		visit search_people_path
+	      	first("tbody").all("tr").count.should eq 5
+	      	fill_in("search_for", :with => "Fred")
+	      	#binding.pry
+      		click_button("submit-search")
+      		first("tbody").all("tr").count.should eq 1
+      		click_button("clear-search")
+    			first("input#search_for").value.should eq ""
+    			first("tbody").all("tr").count.should eq 5
+      	end
 	      
-	    end
+      end
+      
     end
-    
-    describe "ISOLATE SORT TESTS" do
-      describe "sort" do
-	    	before(:each) do
-	    		(1..50).each do 
-						FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
-							last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
-					end  
-	    	end
-	    	
-	      it "shows sort dropdown with default sort order selected when no sorting is chosen" do
-	      	visit sort_people_path
-	      	find("select#sort_by").value.should eq "last_name"
-	      end
+  
+    describe "sort only" do
+    	before(:each) do
+    		(1..50).each do 
+					FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
+						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
+				end  
+    	end
+    	
+      it "shows sort dropdown with default sort order selected when no sorting is chosen" do
+      	visit sort_people_path
+      	find("select#sort_by").value.should eq "last_name"
+      end
 
-	      it "sorts by first name when selected", :js => true do
-	      	visit sort_people_path
-	      	select("Email", :from => "sort_by") #just to force onchange event for next line
-	      	select("First name", :from => "sort_by")
-	      	sleep 0.5
-	      	first_names = all(:xpath, "//table/tbody/tr/td[1]")
-	      	first_names.map(&:text).should == first_names.map(&:text).sort
-	      end
-	      it "sorts by last name when selected", :js => true do
-	      	visit sort_people_path
-	      	select("Last name", :from => "sort_by")
-	      	sleep 0.5
-	      	last_names = all(:xpath, "//table/tbody/tr/td[2]")
-	      	last_names.map(&:text).should == last_names.map(&:text).sort
-	      end
-	      it "sorts by last name descending when selected", :js => true do
-	      	visit sort_people_path
-	      	select("Last name [desc]", :from => "sort_by")
-	      	sleep 0.5
-	      	last_names = all(:xpath, "//table/tbody/tr/td[2]")
-	      	last_names.map(&:text).should == last_names.map(&:text).sort.reverse
-	      end
-	      it "defaults to valid ascending search if invalid sort direction, but valid 
-	      		sort column value is passed in", :js => false do
-	      	visit sort_people_path(:sort_by => "email invalid_direction")
-	      	find("select#sort_by").value.should eq "email"
-	      end
+      it "sorts by first name when selected", :js => true do
+      	visit sort_people_path
+      	select("Email", :from => "sort_by") #just to force onchange event for next line
+      	select("First name", :from => "sort_by")
+      	sleep 0.5
+      	first_names = all(:xpath, "//table/tbody/tr/td[1]")
+      	first_names.map(&:text).should == first_names.map(&:text).sort
+      end
+      it "sorts by last name when selected", :js => true do
+      	visit sort_people_path
+      	select("Last name", :from => "sort_by")
+      	sleep 0.5
+      	last_names = all(:xpath, "//table/tbody/tr/td[2]")
+      	last_names.map(&:text).should == last_names.map(&:text).sort
+      end
+      it "sorts by last name descending when selected", :js => true do
+      	visit sort_people_path
+      	select("Last name [desc]", :from => "sort_by")
+      	sleep 0.5
+      	last_names = all(:xpath, "//table/tbody/tr/td[2]")
+      	last_names.map(&:text).should == last_names.map(&:text).sort.reverse
+      end
+      it "defaults to valid ascending search if invalid sort direction, but valid 
+      		sort column value is passed in", :js => false do
+      	visit sort_people_path(:sort_by => "email invalid_direction")
+      	find("select#sort_by").value.should eq "email"
+      end
 
-	      it "allows sorting by column that is specifying extended options 
-	      		hash to sql_searchable in the model", :js => true do
-	      		p1 = FactoryGirl.create(:person, :email => "p1@domain.com")
-	      		sleep 1
-	      		p2 = FactoryGirl.create(:person, :email => "p2@domain.com")
-	      		visit sort_people_path
-	      		select("Date last changed [desc]", :from => "sort_by")
-	      		emails = all(:xpath, "//table/tbody/tr/td[3]")
-	      		#binding.pry
-	      		emails[0].text.should eq p2.email
-	      		emails[1].text.should eq p1.email
-	      end
-	    end
+      it "allows sorting by column that is specifying extended options 
+      		hash to sql_searchable in the model", :js => true do
+      		p1 = FactoryGirl.create(:person, :email => "p1@domain.com")
+      		sleep 1
+      		p2 = FactoryGirl.create(:person, :email => "p2@domain.com")
+      		visit sort_people_path
+      		select("Date last changed [desc]", :from => "sort_by")
+      		emails = all(:xpath, "//table/tbody/tr/td[3]")
+      		#binding.pry
+      		emails[0].text.should eq p2.email
+      		emails[1].text.should eq p1.email
+      end
     end
-    
+  
     
     describe "both search and sort" do
     	before(:each) do
