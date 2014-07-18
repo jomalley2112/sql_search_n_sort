@@ -55,6 +55,7 @@ describe "People" do
 	      		visit search_people_path
 		      	first("tbody").all("tr").count.should eq 5
 		      	fill_in("search_for", :with => "Fred")
+		      	#binding.pry
 	      		click_button("submit-search")
 	      		first("tbody").all("tr").count.should eq 1
 	      		click_button("clear-search")
@@ -165,15 +166,12 @@ describe "People" do
       	visit people_path(filter: "managers", aged: "42")
       	fill_in("search_for", :with => "irrelevant search text")
       	click_button("submit-search")
-      	#FIX
       	current_url.should match("filter=managers")
       	current_url.should match("aged=42")
       end
       it "passes along existing params when re-sorting" do
       	visit people_path(filter: "sales", aged: "43")
       	select("Email", :from => "sort_by")
-      	
-      	#Methinks these are producing a false positive
       	current_url.should match("filter=sales")
       	current_url.should match("aged=43")
       end

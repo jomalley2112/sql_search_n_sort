@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
 
-  resources :people
+  #resources :people
+  get "/people" => 'people#index'
   get "/search_people" => 'people#search_only_index'
   get "/sort_people" => 'people#sort_only_index'
+  post "/people" => 'people#index'
+  post "/search_people" => 'people#search_only_index'
+  post "/sort_people" => 'people#sort_only_index'
   
   # get "/people" => "people#index"
   # get "/person/:id" => ""
