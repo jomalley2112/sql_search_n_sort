@@ -62,6 +62,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 	- app/views/application/_sort_form.html.haml
 	- app/views/application/_search_form.html.haml
 	- app/assets/javascripts/sql_search_n_sort.js
+	- app/helpers/sql_search_n_sort_helper.rb
 	- Add method def to app/controllers/application_controller.rb
 	- lib/sql_search_n_sort/sql_searchable_sortable.rb (does this need to be copied to models/concerns or is it
 		just available because its in the lib dir of the gem???)
@@ -72,7 +73,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
       "\n//= require jquery\n//= require jquery_ujs"
     end
   ```
-TODO: In the form partials pass along ANY other params that exist
+  
 TODO: Add message when 0 search results...pull text from locale file
 TODO: Allow for case-sensitive and whole word searches
 TODO: Add image of top of list to this README if possible
