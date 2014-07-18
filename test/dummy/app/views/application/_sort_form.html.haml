@@ -1,5 +1,4 @@
--action_params = request.query_parameters.merge(id: "search-form").reject { |k, v| k == "sort_by" }
-=form_tag(action_params, :method => :post) do
-	/= hidden_field_tag(:search_for, params[:search_for])
+%form
+	= hidden_field_tag(:search_for, params[:search_for])
 	= label_tag :sort_by
 	= select_tag :sort_by, options_for_select(opts ||= @sort_dropdown_opts, params[:sort_by]), :onchange => "submit();"
