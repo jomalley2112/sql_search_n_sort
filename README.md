@@ -20,7 +20,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 - Usage: 
 	1. Add to Gemfile: `gem "sql_search_n_sort", :git =>"https://github.com/jomalley2112/sql_search_n_sort.git"`
 	then run `bundle install`
-		a. The run `rails g rails_search_n_sort:install`
+		a. Then run `rails g rails_search_n_sort:install`
 	2. In model to be searched/sorted add the following:
 		- `extend SqlSearchableSortable`
 		- `sql_searchable :searchable_col1, :searchable_col2, :searchable_col3 #...`
