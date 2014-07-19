@@ -20,8 +20,8 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 - Usage: 
 	1. Add to Gemfile: `gem "sql_search_n_sort", :git =>"https://github.com/jomalley2112/sql_search_n_sort.git"`
 	then run `bundle install`
-		a. Then run `rails g rails_search_n_sort:install`
-	2. In model to be searched/sorted add the following:
+	2. run `rails g sql_search_n_sort:install`
+	3. In model to be searched/sorted add the following:
 		- `extend SqlSearchableSortable`
 		- `sql_searchable :searchable_col1, :searchable_col2, :searchable_col3 #...`
 			- and/or
@@ -30,11 +30,11 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 		- and optionally
 			-	`default_sql_sort :sortable_col1`
 				- NOTE: specifying order in the model's default_scope will cause sql_sort functionality to break
-	3. Views: 
+	4. Views: 
 		- In view file for page to include search functionality add the following code in the position where you want the search unit to be located: `= render 'search_form'`
 		- In view file for page to include search functionality add the following code in the position where you want the sort unit to be located: `= render 'sort_form' #, :opts => @sort_dropdown_opts`
 			-Note that the `:opts => @sort_dropdown_opts` is optional and may be included if you feel better about only using local variables in your partials or if for some reason you want to manually define your own set of options for the sort select list.
-	4. In controller action (usually #index) add the following (assuming the model is named Person):
+	5. In controller action (usually #index) add the following (assuming the model is named Person):
 		- For both Search & Sort:
 	  `@people = Person.sql_search(params[:search_for]).sql_sort(@sort_by, @sort_dir)`
 		- For just Search
@@ -42,7 +42,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 		- For just Sort:
 		`@people = Person.sql_sort(@sort_by, @sort_dir)`
 			- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_search_n_sort, :only => [:index]`. You will need to add any actions named anything other than :index to this array e.g. `before_filter :setup_sql_search_n_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_search_n_sort`, which may cause a minimal performance loss depending on how many actions are defined in your controller.
-	5. Style to your liking
+	6. Style to your liking
 
 
 	Example Model:

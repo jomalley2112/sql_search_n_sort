@@ -24,7 +24,7 @@ module SqlSearchableSortable
 	end
 
 	def sql_searchable(*cols)
-		@sql_search_cols = cols
+		@sql_search_cols = cols || []
 			.select do |c| 
 				col_name = c.is_a?(Hash) ? col.keys.first.to_s : c.to_s
 				model_name.name.constantize.column_names.include?(col_name)
@@ -44,6 +44,7 @@ module SqlSearchableSortable
 		@default_sort_col
 	end
 
+	#maybe skip this if model not sortable
 	def sort_cols_for_dropdown
 		return @sql_sort_cols.inject([]) do |m, col|
 			if col.is_a?(Hash) 
