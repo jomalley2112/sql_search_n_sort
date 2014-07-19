@@ -47,7 +47,7 @@ module SqlSearchNSort
 					params[:sort_by] = @sort_by #attempt to save from invalid sort direction passed in with valid sort_by
 				end
 			else
-				params[:sort_by] = Person.default_sort_col
+				params[:sort_by] = model.default_sort_col
 			end
 			@sort_dropdown_opts = model.sort_cols_for_dropdown #defined for the view to use
 			@sort_dir ||= :asc
