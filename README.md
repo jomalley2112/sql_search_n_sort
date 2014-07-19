@@ -41,7 +41,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 		`@people = Person.sql_search(params[:search_for])`
 		- For just Sort:
 		`@people = Person.sql_sort(@sort_by, @sort_dir)`
-			- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_search_n_sort, :only => [:index]`. You will need to add any actions named anything other than :index to this array e.g. `before_filter :setup_sql_search_n_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_search_n_sort`, which may cause a minimal performance loss depending on how many actions are defined in your controller.
+			- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_search_n_sort, :only => [:index]`. You will need to add any actions named anything other than :index to this array e.g. `before_filter :setup_sql_search_n_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_search_n_sort`, which could cause a minimal performance loss depending on how many actions are defined in your controller.
 	6. Style to your liking
 
 
@@ -59,22 +59,15 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 		end
 	```
 
-- FILES:
-	- app/views/application/_sort_form.html.haml
-	- app/views/application/_search_form.html.haml
-	- app/assets/javascripts/sql_search_n_sort.js
-	- app/helpers/sql_search_n_sort_helper.rb
-	- Add method def and before_filter call to app/controllers/application_controller.rb
-	- needs jquery if it isn't already required...use something like the following in the generator:
-	```
-	inject_into_file "#{::Rails.root.to_s}/app/assets/javascripts/application.js",
-    before: "\n//= require_tree ." do
-      "\n//= require jquery\n//= require jquery_ujs"
-    end
-  ```
-  #TODO: We just need to figure if we're moving this to Controllers/concerns or somehow keeping it encapsulated in the gem
-  - lib/sql_search_n_sort/sql_searchable_sortable.rb (does this need to be copied to models/concerns or is it
-		just available because its in the lib dir of the gem???)
+- Files that will be copied to your project:
+	- `app/views/application/_sort_form.html.haml`
+	- `app/views/application/_search_form.html.haml`
+	- `app/assets/javascripts/sql_search_n_sort.js`
+	- `app/helpers/sql_search_n_sort_helper.rb`
+- Other changes made by the generator
+	- Adds method def and before_filter call to `app/controllers/application_controller.rb`
+	- Adds `//= require jquery` to app/assets/javascripts/application.js if not already there.
+	
 
 TODO: Add message when 0 search results...pull text from locale file...not sure this'll work...maybe as another partial???
 TODO: Allow for case-sensitive and whole word searches
