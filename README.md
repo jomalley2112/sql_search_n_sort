@@ -1,21 +1,7 @@
 # SqlSearchNSort #
 
-## Not Quite Ready Yet ##
-
 Provides very simple SQL-based sort and search functionality (that works together or separately) for the index or any other page that lists out ActiveRecord models without having to run a separate full-text server like Solr. Keep in mind that depending on your data volume and field types it may be wise to index some the fields you are searching or sorting on. Also, you will want to add your own CSS styles.
 
-- Dependencies:
-	- "rails", "~> 4.1.2"
-  - "haml-rails"
-
-- Development Environment Dependencies:
-	- "sqlite3"
-	- "rspec-rails"
-	- "capybara"
-	- "selenium-webdriver"
-	- "factory_girl_rails"
-	- "database_cleaner"
-	- "faker"
 
 - Usage: 
 	1. Add to Gemfile: `gem "sql_search_n_sort", :git =>"https://github.com/jomalley2112/sql_search_n_sort.git"`
@@ -68,6 +54,18 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 	- Adds an include and a before_filter call to `app/controllers/application_controller.rb`
 	- Adds `//= require jquery` to app/assets/javascripts/application.js if not already there.
 	
+- Dependencies:
+	- "rails", "~> 4.1.2"
+  - "haml-rails"
+
+- Development Environment Dependencies:
+	- "sqlite3"
+	- "rspec-rails"
+	- "capybara"
+	- "selenium-webdriver"
+	- "factory_girl_rails"
+	- "database_cleaner"
+	- "faker"
 
 TODO: Add message when 0 search results...pull text from locale file...not sure this'll work...maybe as another partial???
 TODO: Allow for case-sensitive and whole word searches
