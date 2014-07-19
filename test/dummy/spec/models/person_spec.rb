@@ -104,6 +104,14 @@ describe Person do
 		  	Person.sql_sort(:first_name).sql_search("John_1")
 		  		.should eq Person.sql_search("John_1").sql_sort(:first_name)
 		  end
+
+		  describe "-able attributes" do
+		  	it "has a sortable? method" do
+		  		Person.should respond_to :sortable?
+		  		Person.sortable?.should be true
+		  	end
+		  	
+      end
 		
 		end
 

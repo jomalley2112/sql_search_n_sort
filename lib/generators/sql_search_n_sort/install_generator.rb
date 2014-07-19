@@ -31,11 +31,11 @@ module SqlSearchNSort
 		def insert_into_app_controller
 			inject_into_file "app/controllers/application_controller.rb",
 		    before: /^end/ do
-		      %Q`\n  before_filter :setup_sql_search_n_sort, :only => [:index, :sort_only_index]
+		      %Q`\n  before_filter :setup_sql_search_n_sort, :only => [:index] #, :sort_only_index
 
   def setup_sql_search_n_sort
     model = controller_name.singularize.capitalize.constantize
-    if model.is_a? SqlSearchableSortable
+    if model.is_a?(SqlSearchableSortable) && model.sortable?
 			if params[:sort_by]
 				@sort_by = (params[:sort_by].split(' ').length > 1) ? 
 											params[:sort_by].split(' ').first.to_sym : params[:sort_by].to_sym
