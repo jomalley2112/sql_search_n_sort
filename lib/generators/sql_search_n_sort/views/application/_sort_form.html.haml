@@ -1,0 +1,5 @@
+%form
+	= hide_current_params("sort_by").html_safe
+	/= hidden_field_tag(:search_for, params[:search_for])
+	= label_tag :sort_by
+	= select_tag :sort_by, options_for_select(opts ||= @sort_dropdown_opts, params[:sort_by]), :onchange => "submit();"
