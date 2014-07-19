@@ -20,6 +20,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 - Usage: 
 	1. Add to Gemfile: `gem "sql_search_n_sort", :git =>"https://github.com/jomalley2112/sql_search_n_sort.git"`
 	then run `bundle install`
+		a. The run `rails g rails_search_n_sort:install`
 	2. In model to be searched/sorted add the following:
 		- `extend SqlSearchableSortable`
 		- `sql_searchable :searchable_col1, :searchable_col2, :searchable_col3 #...`
@@ -63,9 +64,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 	- app/views/application/_search_form.html.haml
 	- app/assets/javascripts/sql_search_n_sort.js
 	- app/helpers/sql_search_n_sort_helper.rb
-	- Add method def to app/controllers/application_controller.rb
-	- lib/sql_search_n_sort/sql_searchable_sortable.rb (does this need to be copied to models/concerns or is it
-		just available because its in the lib dir of the gem???)
+	- Add method def and before_filter call to app/controllers/application_controller.rb
 	- needs jquery if it isn't already required...use something like the following in the generator:
 	```
 	inject_into_file "#{::Rails.root.to_s}/app/assets/javascripts/application.js",
@@ -73,8 +72,11 @@ Provides very simple SQL-based sort and search functionality (that works togethe
       "\n//= require jquery\n//= require jquery_ujs"
     end
   ```
-  
-TODO: Add message when 0 search results...pull text from locale file
+  #TODO: We just need to figure if we're moving this to Controllers/concerns or somehow keeping it encapsulated in the gem
+  - lib/sql_search_n_sort/sql_searchable_sortable.rb (does this need to be copied to models/concerns or is it
+		just available because its in the lib dir of the gem???)
+
+TODO: Add message when 0 search results...pull text from locale file...not sure this'll work...maybe as another partial???
 TODO: Allow for case-sensitive and whole word searches
 TODO: Add image of top of list to this README if possible
 

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+
   before_filter :setup_sql_search_n_sort, :only => [:index, :sort_only_index]
 
   def setup_sql_search_n_sort
@@ -25,4 +26,5 @@ class ApplicationController < ActionController::Base
 			@sort_dir ||= :asc
 		end
   end
+
 end
