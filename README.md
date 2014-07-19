@@ -65,7 +65,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 	- `app/assets/javascripts/sql_search_n_sort.js`
 	- `app/helpers/sql_search_n_sort_helper.rb`
 - Other changes made by the generator
-	- Adds method def and before_filter call to `app/controllers/application_controller.rb`
+	- Adds an include and a before_filter call to `app/controllers/application_controller.rb`
 	- Adds `//= require jquery` to app/assets/javascripts/application.js if not already there.
 	
 

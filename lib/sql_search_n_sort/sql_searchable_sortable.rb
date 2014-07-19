@@ -1,4 +1,3 @@
-#require 'pry'
 module SqlSearchableSortable
 	extend ActiveSupport::Concern
 

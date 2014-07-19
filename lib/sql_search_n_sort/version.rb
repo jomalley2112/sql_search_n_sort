@@ -1,3 +1,3 @@
 module SqlSearchNSort
-  VERSION = "0.0.131"
+  VERSION = "0.1.0"
 end
