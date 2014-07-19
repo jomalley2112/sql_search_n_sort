@@ -34,8 +34,8 @@ class InstallGeneratorTest < Rails::Generators::TestCase
   test "Assert lines have been inserted into proper files" do
     
     assert_file "app/controllers/application_controller.rb" do |app_ctrlr|
+      assert_no_match(/include SqlSortSetup/, app_ctrlr)
       assert_no_match(/before_filter :setup_sql_search_n_sort, :only => \[:index/, app_ctrlr)
-      assert_no_match(/def setup_sql_search_n_sort/, app_ctrlr)
     end
 
     assert_file "app/assets/javascripts/application.js" do |app_js|
@@ -45,8 +45,8 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     run_generator @args
     
     assert_file "app/controllers/application_controller.rb" do |app_ctrlr|
+      assert_no_match(/include SqlSortSetup/, app_ctrlr)
       assert_match(/before_filter :setup_sql_search_n_sort, :only => \[:index/, app_ctrlr)
-      assert_match(/def setup_sql_search_n_sort/, app_ctrlr)
     end
 
     assert_file "app/assets/javascripts/application.js" do |app_js|
