@@ -16,7 +16,7 @@ module SqlSortSetup
 			else
 				params[:sort_by] = Person.default_sort_col
 			end
-			@sort_dropdown_opts = model.sort_cols_for_dropdown #defined for the view to use
+			@sort_dropdown_opts = model.sort_cols_for_dropdown #for the view
 			@sort_dir ||= :asc
 		end
   end

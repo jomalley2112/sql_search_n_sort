@@ -8,6 +8,7 @@ module SqlSearchableSortable
 			scope :sql_search, ->(search_for) { where(search_clause(search_for)) }
 			scope :sql_sort, ->(sort_by, dir=:asc) do
 				sort_by ||= @default_sort_col
+				dir ||= :asc
 				#This takes care of not only column names as symbols but also as keys of hashes passed to sql_searchable
 				if  @sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
 					order(sort_by => dir)

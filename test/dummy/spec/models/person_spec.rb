@@ -1,5 +1,9 @@
 require 'spec_helper'
 describe Person do
+
+	before(:all) { run_generator }
+
+  after(:all) { run_destroy }
 	
 	it "should have a sql_searchable class method" do
 		Person.should respond_to(:sql_searchable)

@@ -61,4 +61,17 @@ def same_order?(model, field, arr, asc=true)
     model.sql_sort(field.to_sym, :desc).map { |e| e.send(field) }.uniq == 
       arr.sort_by{ |p| p.send(field) }.reverse.map { |e| e.send(field) }.uniq
   end
+
+end
+
+def run_generator
+  cmd_str = 'rails g sql_search_n_sort:install  --quiet --force' 
+  puts "\n#{cmd_str}"
+  %x(#{cmd_str})
+end
+
+def run_destroy
+  cmd_str = 'rails d sql_search_n_sort:install  --quiet --force' 
+  puts "\n#{cmd_str}"
+  %x(#{cmd_str})
 end
