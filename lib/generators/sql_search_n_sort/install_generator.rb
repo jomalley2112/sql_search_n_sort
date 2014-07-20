@@ -31,12 +31,10 @@ module SqlSearchNSort
 			inject_into_file "app/controllers/application_controller.rb",
 		    before: /^end/ do
 		      %Q`\ninclude SqlSortSetup\n
-		   before_filter :setup_sql_sort, :only => [:index, :sort_only_index]
+	before_filter :setup_sql_sort, :only => [:index, :sort_only_index]
 		   \n`
 		    end
 		end
-
-
 
 	end
 end
