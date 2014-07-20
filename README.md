@@ -1,6 +1,6 @@
 # SqlSearchNSort #
 
-Provides very simple SQL-based sort and search functionality (that works together or separately) for the index or any other page that lists out ActiveRecord models without having to run a separate full-text server like Solr. Keep in mind that depending on your data volume and field types it may be wise to index some the fields you are searching or sorting on. Also, you will want to add your own CSS styles.
+Provides very simple SQL-based search and sort functionality (that works together or separately) for the index or any other page that lists out ActiveRecord models without having to run a separate full-text server like Solr. Keep in mind that depending on your data volume and field types it may be wise to index some or all of the fields you are searching or sorting on. Also, you will want to add your own CSS styles.
 
 
 ![Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
@@ -71,9 +71,7 @@ Provides very simple SQL-based sort and search functionality (that works togethe
 	- "database_cleaner"
 	- "faker"
 
-TODO: Add message when 0 search results...pull text from locale file...not sure this'll work...maybe as another partial???
 TODO: Allow for case-sensitive and whole word searches
-TODO: Add image of top of list to this README if possible
 
 
 This project uses MIT-LICENSE.
