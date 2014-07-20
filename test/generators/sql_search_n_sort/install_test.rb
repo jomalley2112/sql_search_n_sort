@@ -45,7 +45,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     run_generator @args
     
     assert_file "app/controllers/application_controller.rb" do |app_ctrlr|
-      assert_no_match(/include SqlSortSetup/, app_ctrlr)
+      assert_match(/include SqlSortSetup/, app_ctrlr)
       assert_match(/before_filter :setup_sql_sort, :only => \[:index/, app_ctrlr)
     end
 
