@@ -1,6 +1,15 @@
 require 'spec_helper'
+require 'pry'
 
 describe "People" do
+  before(:all) do
+    run_generator
+    load "#{ Rails.root }/app/helpers/sql_search_n_sort_helper.rb"
+    load "#{ Rails.root }/app/controllers/application_controller.rb"
+  end
+
+  after(:all) { run_destroy }
+
   describe "GET /people" do
   	# before(:each) do
   	#   (1..25).each { FactoryGirl.create(:person) }
@@ -54,7 +63,6 @@ describe "People" do
       		visit search_people_path
 	      	first("tbody").all("tr").count.should eq 5
 	      	fill_in("search_for", :with => "Fred")
-	      	#binding.pry
       		click_button("submit-search")
       		first("tbody").all("tr").count.should eq 1
       		click_button("clear-search")
@@ -74,9 +82,9 @@ describe "People" do
 				end  
     	end
     	
-      it "shows sort dropdown with default sort order selected when no sorting is chosen" do
+      it "shows sort dropdown with default sort order selected when no sorting is chosen", :js => true do
       	visit sort_people_path
-      	find("select#sort_by").value.should eq "last_name"
+        find("select#sort_by").value.should eq "last_name"
       end
 
       it "sorts by first name when selected", :js => true do
@@ -115,7 +123,6 @@ describe "People" do
       		visit sort_people_path
       		select("Date last changed [desc]", :from => "sort_by")
       		emails = all(:xpath, "//table/tbody/tr/td[3]")
-      		#binding.pry
       		emails[0].text.should eq p2.email
       		emails[1].text.should eq p1.email
       end
