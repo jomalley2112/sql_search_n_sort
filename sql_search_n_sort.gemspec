@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email       = ["jom@nycap.rr.com"]
   s.homepage    = "https://github.com/jomalley2112/sql_search_n_sort"
   s.summary     = "Easily add search and sort functionality to list pages (e.g. index)"
-  s.description = "see README.md"
+  s.description = "A gem that allows for simple SQL-based search and sort functionality"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
