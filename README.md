@@ -1,5 +1,7 @@
 # SqlSearchNSort #
 
+[![Gem Version](https://badge.fury.io/rb/sql_search_n_sort.svg)](http://badge.fury.io/rb/sql_search_n_sort)
+
 Provides very simple SQL-based search and sort functionality (that works together or separately) for the index or any other page that lists out ActiveRecord models without having to run a separate full-text server like Solr. Keep in mind that depending on your data volume and field types it may be wise to index some or all of the fields you are searching or sorting on. Also, you will want to add your own CSS styles.
 
 
