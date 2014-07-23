@@ -13,7 +13,7 @@ module SqlSearchableSortable
 				if  @sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
 					order(sort_by => dir)
 				else
-					default_sort_col ? unscoped.order(default_sort_col => dir) : unscoped
+					default_sort_col ? order(default_sort_col => dir) : self
 				end
 			end
 		end

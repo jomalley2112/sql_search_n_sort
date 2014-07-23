@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sql_search_n_sort (1.0)
+    sql_search_n_sort (1.01)
       haml-rails
       jquery-rails
       rails (~> 4.0)
