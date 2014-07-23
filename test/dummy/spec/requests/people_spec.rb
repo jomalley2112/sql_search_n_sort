@@ -103,7 +103,7 @@ describe "People" do
       	last_names.map(&:text).should == last_names.map(&:text).sort
       end
       it "sorts by last name descending when selected", :js => true do
-      	visit sort_people_path
+        visit sort_people_path
       	select("Last name [desc]", :from => "sort_by")
       	sleep 0.5
       	last_names = all(:xpath, "//table/tbody/tr/td[2]")
