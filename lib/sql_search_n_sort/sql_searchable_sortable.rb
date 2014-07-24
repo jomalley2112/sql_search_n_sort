@@ -1,16 +1,27 @@
 module SqlSearchableSortable
 	extend ActiveSupport::Concern
 
+	@@default_sort_col = nil #class vars need to be declared
+	@@default_sort_dir = :asc
+	@@sql_search_cols = []
+	@@sql_sort_cols = []
+
   def self.extended(base)
   	@base = base #for debugging
+  	
   	base.class_eval do
   		attr_accessor :ssns_sortable
+			
+			#:Note remeber these scopes aren't actually running from here. There just
+			# being defined from here...when they get called they don't have access to "base"
+			
 			scope :sql_search, ->(search_for) { where(search_clause(search_for)) }
+			
 			scope :sql_sort, ->(sort_by=nil, dir=nil) do
-				sort_by ||= @default_sort_col
-				dir ||= @default_sort_dir ||= :asc
+				sort_by ||= self.class_variable_get(:@@default_sort_col)
+				dir ||= self.class_variable_get(:@@default_sort_dir) || :asc
 				#This takes care of not only column names as symbols but also as keys of hashes passed to sql_searchable
-				if  @sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
+				if  self.class_variable_get(:@@sql_sort_cols).any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
 					order(sort_by => dir)
 				else
 					default_sort_col ? order(default_sort_col => dir) : order(nil)
@@ -20,14 +31,17 @@ module SqlSearchableSortable
 	end
 
 	def search_clause(search_for)
-		(@sql_search_cols ||= []).inject("1=2 ") do |m, col|
+		(self.class_variable_get(:@@sql_search_cols) || []).inject("1=2 ") do |m, col|
 			m << " or #{col} like '%#{search_for}%'"
 		end
 	end
 
 	def sql_searchable(*cols)
 		#@is_sql_searchable = true
-		@sql_search_cols = cols ||= []
+		#to make sure @@default_sort_col & @@default_sort_dir get initialized
+		# when no default column is specified for the model
+		default_sql_sort(nil) 
+		self.class_variable_set(:@@sql_search_cols, (cols ||= []))
 			.select do |c| 
 				col_name = c.is_a?(Hash) ? col.keys.first.to_s : c.to_s
 				model_name.name.constantize.column_names.include?(col_name)
@@ -36,33 +50,34 @@ module SqlSearchableSortable
 
 	def sql_sortable(*cols)
 		#@base.ssns_sortable = true #debugging
-		@sql_sort_cols = cols
+		self.class_variable_set(:@@sql_sort_cols, cols)
+		# @@sql_sort_cols = cols
 	end
 
 	def default_sql_sort(col, dir=nil)
-		#TODO: Allow optional direction option to be passed as 2nd arg
-		@default_sort_col = col
-		@default_sort_dir = dir
+		self.class_variable_set(:@@default_sort_col, col)
+		self.class_variable_set(:@@default_sort_dir, dir)
 	end
 
 	def sortable?
-		!!@sql_sort_cols
+		!!self.class_variable_get(:@@sql_sort_cols)
 	end
 
 	#attribute reader
 	def default_sort_col
-		@default_sort_col
+		self.class_variable_get(:@@default_sort_col)
 	end
 
 	#attribute reader
 	def default_sort_dir
-		@default_sort_dir
+		self.class_variable_get(:@@default_sort_dir)
 	end
 
 	
 	def sort_cols_for_dropdown
-		@sql_sort_cols ||= []
-		return @sql_sort_cols.inject([]) do |m, col|
+		sql_sort_cols = self.class_variable_get(:@@sql_sort_cols)
+		sql_sort_cols ||= []
+		return sql_sort_cols.inject([]) do |m, col|
 			if col.is_a?(Hash) 
 				h = col.fetch(col.keys.first)
 				show_asc = h[:show_asc].nil? ? true : h[:show_asc]

@@ -1,7 +1,6 @@
 class VehiclesController < ApplicationController
 
 	def index
-		#binding.pry
 		@vehicles = Vehicle.sql_search(params[:search_for]).sql_sort(@sort_by, @sort_dir)
 	end
 
