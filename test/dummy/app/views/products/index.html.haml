@@ -1,0 +1,19 @@
+%h1 Listing products
+
+%table
+  %tr
+    %td{colspan: "8"}= render 'sort_form'
+  %tr
+    %th Name
+    %th Descr
+    %th Price
+    %th Date produced
+    %th Manufacturer
+
+  - @products.each do |product|
+    %tr
+      %td= product.name
+      %td= product.descr
+      %td= product.price
+      %td= product.date_produced
+      %td= product.manufacturer

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
-  resources :products
-  #get "/products" => 'products#index'
+  #resources :products
+  get "/products" => 'products#index'
 
   #resources :people
   get "/people" => 'people#index'
