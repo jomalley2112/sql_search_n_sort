@@ -6,14 +6,14 @@ module SqlSearchableSortable
   	base.class_eval do
   		attr_accessor :ssns_sortable
 			scope :sql_search, ->(search_for) { where(search_clause(search_for)) }
-			scope :sql_sort, ->(sort_by, dir=:asc) do
+			scope :sql_sort, ->(sort_by=nil, dir=nil) do
 				sort_by ||= @default_sort_col
-				dir ||= :asc
+				dir ||= @default_sort_dir ||= :asc
 				#This takes care of not only column names as symbols but also as keys of hashes passed to sql_searchable
 				if  @sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
 					order(sort_by => dir)
 				else
-					default_sort_col ? order(default_sort_col => dir) : self
+					default_sort_col ? order(default_sort_col => dir) : order(nil)
 				end
 			end
 		end
