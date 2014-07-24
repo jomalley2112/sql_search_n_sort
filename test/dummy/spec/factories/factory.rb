@@ -9,4 +9,19 @@ FactoryGirl.define do
     sequence(:nickname) { |n| "nick_#{n}" }
   end
 
+  factory :vehicle do
+  	year 2010
+  	manufacturer "Chevrolet"
+  	model "Silverado"
+  	engine "5.0 liter"
+  	color "Pewter"
+  end
+
+  factory :product do
+    sequence(:name) { |n| "cog_#{n}" }
+    descr { "random description #{Random.rand(1..20)}" }
+    price { "#{Random.rand(1..250)}" }
+    date_produced { Time.now - Random.rand(1..100).days }
+    manufacturer { "Company #{Random.rand(1..5)}" } 
+  end
 end

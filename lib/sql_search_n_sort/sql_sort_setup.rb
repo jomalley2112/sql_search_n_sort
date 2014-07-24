@@ -14,7 +14,8 @@ module SqlSortSetup
 					params[:sort_by] = @sort_by #attempt to save from invalid sort direction passed in with valid sort_by
 				end
 			else
-				params[:sort_by] = Person.default_sort_col
+				#TODO: I'm not sure its adviseable to set a params value like this
+				params[:sort_by] = "#{model.default_sort_col} #{model.default_sort_dir}"
 			end
 			@sort_dropdown_opts = model.sort_cols_for_dropdown #for the view
 			@sort_dir ||= :asc

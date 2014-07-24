@@ -1,0 +1,5 @@
+%form{id: "search-form"}
+	= hide_current_params("search_for").html_safe
+	=text_field_tag :search_for, params[:search_for], :placeholder => "Search"
+	%button#submit-search{:type => "submit"}Find
+	%button#clear-search{onclick: "clear_search();"} Clear

@@ -39,8 +39,10 @@ module SqlSearchableSortable
 		@sql_sort_cols = cols
 	end
 
-	def default_sql_sort(col)
+	def default_sql_sort(col, dir=nil)
+		#TODO: Allow optional direction option to be passed as 2nd arg
 		@default_sort_col = col
+		@default_sort_dir = dir
 	end
 
 	def sortable?
@@ -50,6 +52,11 @@ module SqlSearchableSortable
 	#attribute reader
 	def default_sort_col
 		@default_sort_col
+	end
+
+	#attribute reader
+	def default_sort_dir
+		@default_sort_dir
 	end
 
 	

@@ -42,7 +42,7 @@ Provides very simple SQL-based search and sort functionality (that works togethe
 		class Person < ActiveRecord::Base
 			extend SqlSearchableSortable
 			sql_searchable :first_name, :last_name
-			sql_sortable 	 :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"}
+			sql_sortable   :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"}
 			
 			default_sql_sort :last_name #optional
 			
@@ -73,7 +73,9 @@ Provides very simple SQL-based search and sort functionality (that works togethe
 	- "database_cleaner"
 	- "faker"
 
+TODO: Allow default sort column to accept a direction option (for descending order)
 TODO: Allow for case-sensitive and whole word searches
+
 
 
 This project uses MIT-LICENSE.

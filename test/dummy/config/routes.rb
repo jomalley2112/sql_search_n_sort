@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
 
+  resources :products
+  #get "/products" => 'products#index'
+
   #resources :people
   get "/people" => 'people#index'
   get "/search_people" => 'people#search_only_index'
   get "/sort_people" => 'people#sort_only_index'
   
+  get "/vehicles" => 'vehicles#index'
+  get "/search_vehicles" => 'vehicles#search_only_index'
+  get "/sort_vehicles" => 'vehicles#sort_only_index'
   
   # get "/people" => "people#index"
   # get "/person/:id" => ""
