@@ -15,8 +15,8 @@ module SqlSortSetup
 					params[:sort_by] = @sort_by #attempt to save from invalid sort direction passed in with valid sort_by
 				end
 			else
-				sort_by_param = model.default_sort_col
-				sort_by_param += " " + model.default_sort_dir unless model.default_sort_dir.nil?
+				sort_by_param = model.default_sort_col.to_s
+				sort_by_param += " #{model.default_sort_dir}" unless model.default_sort_dir.nil?
 				#TODO: I'm not sure its adviseable to set a params value like this
 				params[:sort_by] = sort_by_param
 			end
