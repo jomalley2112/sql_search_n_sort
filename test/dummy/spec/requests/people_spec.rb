@@ -144,7 +144,7 @@ describe "People" do
       	select("First name", :from => "sort_by")
       	sleep 0.5
       	first_names = all(:xpath, "//table/tbody/tr/td[1]")
-        binding.pry
+        #binding.pry
       	first_names.map(&:text).should == first_names.map(&:text).sort
       	fill_in("search_for", :with => "john_2")
       	click_button("submit-search")
