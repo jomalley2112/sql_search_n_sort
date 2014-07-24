@@ -85,7 +85,7 @@ describe "People" do
 				end  
     	end
     	
-      it "shows sort dropdown with default sort order selected when no sorting is chosen", :js => true do
+      it "shows sort dropdown with default sort order selected when no sorting is chosen (people)", :js => true do
       	visit sort_people_path
         find("select#sort_by").value.should eq "last_name"
       end
@@ -144,8 +144,7 @@ describe "People" do
       	select("First name", :from => "sort_by")
       	sleep 0.5
       	first_names = all(:xpath, "//table/tbody/tr/td[1]")
-        #binding.pry
-      	first_names.map(&:text).should == first_names.map(&:text).sort
+        first_names.map(&:text).should == first_names.map(&:text).sort
       	fill_in("search_for", :with => "john_2")
       	click_button("submit-search")
       	sleep 0.5
@@ -155,8 +154,7 @@ describe "People" do
       end
 
       it "keeps the same search results after re-sort (people)", :js => true do
-        #binding.pry
-      	visit people_path
+        visit people_path
       	all(:xpath, "//table/tbody/tr").count.should eq 50
       	fill_in("search_for", :with => "john_2")
       	click_button("submit-search")

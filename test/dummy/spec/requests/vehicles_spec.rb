@@ -146,7 +146,6 @@ describe "Vehicles" do
       	click_button("submit-search")
       	john_2_count = all(:xpath, "//table/tbody/tr").count
       	#make sure search did indeed happen first
-      	#binding.pry
       	john_2_count.should eq all(:xpath, "//table/tbody/tr/td[2]").count { |e| e.text =~ /john_2/i }
       	select("Color [desc]", :from => "sort_by") #resubmits
 				sleep 0.5
