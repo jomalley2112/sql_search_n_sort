@@ -1,0 +1,23 @@
+%h4 Listing Vehicles
+%table
+	%thead
+		%tr
+			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
+				=render "sort_form" #, :opts => @sort_dropdown_opts
+			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
+				=render "search_form"
+		%tr
+			%th Year
+			%th Manufacturer
+			%th Model
+			%th Engine
+			%th Color
+			
+	%tbody
+	- @vehicles.each do |vehicle|
+		%tr
+			%td= vehicle.year
+			%td= vehicle.manufacturer
+			%td= vehicle.model
+			%td= vehicle.engine
+			%td= vehicle.color
