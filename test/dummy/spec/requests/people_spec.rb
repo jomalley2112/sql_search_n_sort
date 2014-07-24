@@ -6,9 +6,12 @@ describe "People" do
     run_generator
     load "#{ Rails.root }/app/helpers/sql_search_n_sort_helper.rb"
     load "#{ Rails.root }/app/controllers/application_controller.rb"
+    
   end
 
-  after(:all) { run_destroy }
+  after(:all) do 
+    run_destroy
+  end
 
   describe "GET /people" do
   	# before(:each) do
@@ -136,11 +139,12 @@ describe "People" do
 						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
 				end  
     	end
-      it "keeps same sort order after search", :js => true do
+      it "keeps same sort order after search (people)", :js => true do
       	visit people_path
       	select("First name", :from => "sort_by")
       	sleep 0.5
       	first_names = all(:xpath, "//table/tbody/tr/td[1]")
+        binding.pry
       	first_names.map(&:text).should == first_names.map(&:text).sort
       	fill_in("search_for", :with => "john_2")
       	click_button("submit-search")
@@ -150,7 +154,8 @@ describe "People" do
       	john_2_first_names.map(&:text).should == john_2_first_names.map(&:text).sort
       end
 
-      it "keeps the same search results after re-sort", :js => true do
+      it "keeps the same search results after re-sort (people)", :js => true do
+        #binding.pry
       	visit people_path
       	all(:xpath, "//table/tbody/tr").count.should eq 50
       	fill_in("search_for", :with => "john_2")
@@ -164,7 +169,7 @@ describe "People" do
 			end
     end
 
-    describe "existing params" do
+    describe "existing params (people)" do
       it "passes along existing params when search form is submitted" do
       	visit people_path(filter: "managers", aged: "42")
       	fill_in("search_for", :with => "irrelevant search text")
@@ -172,7 +177,7 @@ describe "People" do
       	current_url.should match("filter=managers")
       	current_url.should match("aged=42")
       end
-      it "passes along existing params when re-sorting" do
+      it "passes along existing params when re-sorting (people)" do
       	visit people_path(filter: "sales", aged: "43")
       	select("Email", :from => "sort_by")
       	current_url.should match("filter=sales")

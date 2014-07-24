@@ -30,7 +30,7 @@ module SqlSearchNSort
 		def insert_into_app_controller
 			inject_into_file "app/controllers/application_controller.rb",
 		    before: /^end/ do
-		      %Q`\ninclude SqlSortSetup\n
+		      %Q`\n\tinclude SqlSortSetup\n
 	before_filter :setup_sql_sort, :only => [:index, :sort_only_index]
 		   \n`
 		    end
