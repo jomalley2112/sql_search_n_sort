@@ -5,7 +5,7 @@
 #### Description ####
 Provides simple SQL-based* search and sort functionality (that works together or separately) for the index or any other page that lists out ActiveRecord models. Being SQL-driven it gives you search capability without making you run a separate full-text server like Solr. 
 
-**Currently it works on string, text, date and integer fields. Keep in mind that depending on your data volume and field types you may want to index some or all of the fields you are searching or sorting on.*
+*Currently it works on string, text, date and integer fields. Keep in mind that depending on your data volume and field types you may want to index some or all of the fields you are searching or sorting on.
 
 
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
