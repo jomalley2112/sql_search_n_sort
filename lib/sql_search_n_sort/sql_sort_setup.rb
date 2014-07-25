@@ -3,7 +3,6 @@ module SqlSortSetup
 	def setup_sql_sort
 		model = controller_name.singularize.capitalize.constantize
     if model.is_a? SqlSearchableSortable
-
 			if params[:sort_by]
 				@sort_by = (params[:sort_by].split(' ').length > 1) ? 
 											params[:sort_by].split(' ').first.to_sym : params[:sort_by].to_sym
@@ -11,8 +10,10 @@ module SqlSortSetup
 				if [:asc, :desc].include?(dir)
 					@sort_dir = dir
 				else
+					#attempt to save from invalid sort direction passed in with valid sort_by
 					@sort_dir = :asc
-					params[:sort_by] = @sort_by #attempt to save from invalid sort direction passed in with valid sort_by
+					#TODO: I'm not sure its adviseable to set a params value like this
+					params[:sort_by] = @sort_by 
 				end
 			else
 				sort_by_param = model.default_sort_col.to_s

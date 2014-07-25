@@ -1,0 +1,17 @@
+%h4 Articles
+%table
+	%tbody
+		%tr
+			%td{ colspan: "4" }= render 'sort_form'
+		%tr
+			%th Headline
+			%th By line
+			%th Date published
+			%th Article body
+		
+		- @articles.each do |article|
+			%tr
+				%td= article.headline
+				%td= article.by_line
+				%td= article.date_pub
+				%td= article.body
