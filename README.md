@@ -3,9 +3,9 @@
 [![Gem Version](https://badge.fury.io/rb/sql_search_n_sort.svg)](http://badge.fury.io/rb/sql_search_n_sort)
 
 #### Description ####
-Provides simple SQL-based* search and sort functionality (that works together or separately) for the index or any other page that lists out ActiveRecord models. Being SQL-driven it gives you search capability without making you run a separate full-text server like Solr. 
+Provides simple SQL-based* search and sort functionality (that work together or separately) for the index or any other page that lists out ActiveRecord models. Being SQL-driven it gives you search capability without making you run a separate full-text server like Solr. 
 
-*Currently it works on string, text, date and integer fields. Keep in mind that depending on your data volume and field types you may want to index some or all of the fields you are searching or sorting on.
+*Currently it works on string, text, date and integer fields. Keep in mind that depending on your data volume and field types you may want to index some or all of the fields you are searching or sorting on. Only tested on SQLLite at this point, but should work with MySQL and Postgre.
 
 
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
@@ -39,7 +39,7 @@ Provides simple SQL-based* search and sort functionality (that works together or
 
 
 #### Example Model ####
-```
+```ruby
 	class Person < ActiveRecord::Base
 		extend SqlSearchableSortable
 		sql_searchable :first_name, :last_name
@@ -47,7 +47,7 @@ Provides simple SQL-based* search and sort functionality (that works together or
 		
 		default_sql_sort :last_name #optional
 		
-		#NOTE: specifying order in your default_scope will cause sql_sort functionality to break
+		#NOTE: specifying order in your default_scope will cause sort functionality to break
 		#default_scope { order(:email) }
 	end
 ```
@@ -76,4 +76,5 @@ Provides simple SQL-based* search and sort functionality (that works together or
 	- "faker"
 
 #### TODO ####
+- Test on MySQL (should work ok)
 - Allow for case-sensitive and whole word searches
