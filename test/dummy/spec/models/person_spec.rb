@@ -15,26 +15,53 @@ describe Person do
 
 	describe "scopes" do
 		
-		
 		describe "search" do
 			before {(1..50).each { FactoryGirl.create(:person) }}
 			describe "returns only the records that match the search text in the fields specified" do
-				it "returns records with a first_name that matches 'John'" do
-					Person.sql_search("John").count.should == 50
+				describe "string/varchar fields" do
+					it "returns records with a first_name that matches 'John'" do
+						Person.sql_search("John").count.should == 50
+					end
+		  		it "returns records with a first_name that matches 'Non-existent person'" do
+		  			Person.sql_search("Non-existent person").count.should == 0
+		  		end
+		  		it "returns records with a first_name that matches 'John_1'" do
+		  			Person.sql_search("John_1").count.should == 11
+		  		end
+		  		it "returns records with a last_name that matches 'Doe_2'" do
+		  			Person.sql_search("Doe_20").count.should == 1
+		  		end
+		  		it "returns records with an email that matches 'johndoe_3'" do
+		  			#There is an email matching the string, but Person doesn't specify that column as searchable
+		  			Person.sql_search("johndoesemail_36").count.should == 0
+		  		end  
 				end
-	  		it "returns records with a first_name that matches 'Non-existent person'" do
-	  			Person.sql_search("Non-existent person").count.should == 0
-	  		end
-	  		it "returns records with a first_name that matches 'John_1'" do
-	  			Person.sql_search("John_1").count.should == 11
-	  		end
-	  		it "returns records with a last_name that matches 'Doe_2'" do
-	  			Person.sql_search("Doe_20").count.should == 1
-	  		end
-	  		it "returns records with an email that matches 'johndoe_3'" do
-	  			#There is an email matching the string, but Person doesn't specify that column as searchable
-	  			Person.sql_search("johndoesemail_36").count.should == 0
-	  		end
+				describe "text fields" do
+				  it "returns records with a bio that containing 'new jersey devils'" do
+				  	Person.all[0].update_attribute :bio, "I am a big fan of 
+				  			the New Jersey Devils hockey team"
+				  	Person.all[1].update_attribute :bio, "I once went to a New Jersey Devils game."
+				  	Person.sql_search("new jersey devils").count.should == 2
+				  end
+				end
+				describe "Date fields" do
+				  it "returns records with an updated at containing '2001'" do
+				  	#binding.pry
+				  	Person.all[0].update_attribute :dob, "2001-07-25"
+				  	Person.all[1].update_attribute :dob, "2001-12-25"
+				  	Person.all[2].update_attribute :dob, "2001-11-11"
+				  	Person.sql_search("2001").count.should == 3
+				  end
+				end
+				describe "Integer fields" do
+				  it "returns records with a grade containing '26255'" do
+				  	#binding.pry
+				  	Person.all[0].update_attribute :grade, 2526255
+				  	Person.all[1].update_attribute :grade, 12625525
+				  	Person.all[2].update_attribute :grade, 125262550
+				  	Person.sql_search("26255").count.should == 3
+				  end
+				end
 	  	end  
 
 		end

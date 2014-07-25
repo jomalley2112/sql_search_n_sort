@@ -7,7 +7,7 @@ class Person < ActiveRecord::Base
 	# 	@ssns_sortable = ssns_sortable
 	# end
 
-	sql_searchable :first_name, :last_name
+	sql_searchable :first_name, :last_name, :bio, :updated_at, :dob, :grade
 	sql_sortable 	 :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"} #, :age
 	
 	default_sql_sort :last_name
