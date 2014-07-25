@@ -38,19 +38,20 @@ Provides simple SQL-based* search and sort functionality (that works together or
 6. Style to your liking
 
 
-	#### Example Model ####
-	```
-		class Person < ActiveRecord::Base
-			extend SqlSearchableSortable
-			sql_searchable :first_name, :last_name
-			sql_sortable   :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"}
-			
-			default_sql_sort :last_name #optional
-			
-			#NOTE: specifying order in your default_scope will cause sql_sort functionality to break
-			#default_scope { order(:email) }
-		end
-	```
+#### Example Model ####
+```
+	class Person < ActiveRecord::Base
+		extend SqlSearchableSortable
+		sql_searchable :first_name, :last_name
+		sql_sortable   :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"}
+		
+		default_sql_sort :last_name #optional
+		
+		#NOTE: specifying order in your default_scope will cause sql_sort functionality to break
+		#default_scope { order(:email) }
+	end
+```
+
 #### Generator actions ####
 - Files that will be copied to your project:
 	- `app/views/application/_sort_form.html.haml`
