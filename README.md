@@ -10,7 +10,7 @@ Provides simple SQL-based* search and sort functionality (that works together or
 
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
 
-#### Usage #### 
+#### Usage ####
 1. Add to Gemfile: `gem "sql_search_n_sort"` then run `bundle install`
 2. Run `rails g sql_search_n_sort:install`
 3. In model to be searched/sorted add the following lines:
