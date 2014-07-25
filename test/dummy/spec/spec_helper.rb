@@ -69,6 +69,8 @@ def run_generator
   cmd_str = 'rails g sql_search_n_sort:install  --quiet --force' 
   puts "\n#{cmd_str}"
   %x(#{cmd_str})
+  #Need to reload ApplicationController because it was edited by the generator
+  load "#{ Rails.root }/app/controllers/application_controller.rb"
 end
 
 def run_destroy

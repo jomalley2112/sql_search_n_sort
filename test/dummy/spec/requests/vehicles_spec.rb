@@ -6,8 +6,6 @@ require 'pry'
 describe "Vehicles spec" do
   before(:all) do
     run_generator
-    load "#{ Rails.root }/app/helpers/sql_search_n_sort_helper.rb"
-    load "#{ Rails.root }/app/controllers/application_controller.rb"
   end
 
   after(:all) { run_destroy }
