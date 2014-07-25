@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+#The main reason for this spec is to make sure the sorting functionality behaves
+# as expected when you specify :desc as the default sort direction
 describe "Products" do
 	before(:all) do
     run_generator

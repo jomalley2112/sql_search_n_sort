@@ -24,4 +24,13 @@ FactoryGirl.define do
     date_produced { Time.now - Random.rand(1..100).days }
     manufacturer { "Company #{Random.rand(1..5)}" } 
   end
+
+
+  factory :article do
+    headline "Headline #{Random.rand(1..100)}"
+    by_line "Journalist #{Random.rand(1..5)}"
+    date_pub { Time.now - Random.rand(1..100).days }
+    body "The main article... #{Random.rand(0..50)}"
+  end
+
 end

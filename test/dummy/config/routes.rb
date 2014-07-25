@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
+  get "/articles" => 'articles#index'
+
   #resources :products
   get "/products" => 'products#index'
+
 
   #resources :people
   get "/people" => 'people#index'

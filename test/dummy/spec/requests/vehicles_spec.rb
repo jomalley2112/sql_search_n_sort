@@ -1,7 +1,9 @@
 require 'spec_helper'
 require 'pry'
 
-describe "Vehicles" do
+#The reason for this spec is to make sure sorting acts as expected when there is no
+# default sort order specified
+describe "Vehicles spec" do
   before(:all) do
     run_generator
     load "#{ Rails.root }/app/helpers/sql_search_n_sort_helper.rb"
