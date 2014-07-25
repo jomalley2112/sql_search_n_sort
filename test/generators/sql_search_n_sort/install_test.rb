@@ -23,12 +23,10 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_no_file "app/views/application/_sort_form.html.haml"
     assert_no_file "app/views/application/_search_form.html.haml"
     assert_no_file "app/assets/javascripts/sql_search_n_sort.js"
-    assert_no_file "app/helpers/sql_search_n_sort_helper.rb"
     run_generator @args
     assert_file "app/views/application/_sort_form.html.haml"
     assert_file "app/views/application/_search_form.html.haml"
     assert_file "app/assets/javascripts/sql_search_n_sort.js"
-    assert_file "app/helpers/sql_search_n_sort_helper.rb"
   end
 
   test "Assert lines have been inserted into proper files" do
