@@ -52,6 +52,7 @@ RSpec.configure do |config|
   config.order = "random"
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
+  config.include Rails.application.routes.url_helpers
 end
 
 def same_order?(model, field, arr, asc=true)

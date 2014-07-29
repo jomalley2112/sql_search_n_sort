@@ -1,7 +1,6 @@
 require 'rails/generators'
 module SqlSearchNSort
 	class InstallGenerator < Rails::Generators::Base
-		puts "Inside Generator"
 
 		source_paths << File.expand_path('../views/application', __FILE__)
 		source_paths << File.expand_path('../assets/javascripts', __FILE__)
@@ -14,9 +13,6 @@ module SqlSearchNSort
 
       base_path = "app/assets/javascripts"
       copy_file('sql_search_n_sort.js', File.join(base_path, 'sql_search_n_sort.js'))
-
-      # base_path = "app/helpers"
-      # copy_file('sql_search_n_sort_helper.rb', File.join(base_path, 'sql_search_n_sort_helper.rb'))
       
 		end
 
