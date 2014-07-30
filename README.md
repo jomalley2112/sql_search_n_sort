@@ -76,5 +76,4 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 	- "faker"
 
 #### TODO ####
-- Test on MySQL (should work ok)
 - Allow for case-sensitive and whole word searches
