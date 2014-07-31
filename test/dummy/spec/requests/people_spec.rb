@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 describe "People" do
   before(:all) do

@@ -46,7 +46,6 @@ describe Person do
 				end
 				describe "Date fields" do
 				  it "returns records with an updated at containing '2001'" do
-				  	#binding.pry
 				  	Person.all[0].update_attribute :dob, "2001-07-25"
 				  	Person.all[1].update_attribute :dob, "2001-12-25"
 				  	Person.all[2].update_attribute :dob, "2001-11-11"
@@ -55,7 +54,6 @@ describe Person do
 				end
 				describe "Integer fields" do
 				  it "returns records with a grade containing '26255'" do
-				  	#binding.pry
 				  	Person.all[0].update_attribute :grade, 2526255
 				  	Person.all[1].update_attribute :grade, 12625525
 				  	Person.all[2].update_attribute :grade, 125262550
