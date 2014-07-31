@@ -1,7 +1,6 @@
 module SqlSortSetup
 
 	def setup_sql_sort
-		binding.pry
 		model = controller_name.singularize.capitalize.constantize
     if model.is_a? SqlSearchableSortable
 			if params[:sort_by]
