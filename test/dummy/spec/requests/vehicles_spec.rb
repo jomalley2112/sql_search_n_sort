@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'pry'
 
 #The reason for this spec is to make sure sorting acts as expected when there is no
 # default sort order specified
