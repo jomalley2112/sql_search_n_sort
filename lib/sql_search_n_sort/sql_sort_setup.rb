@@ -1,7 +1,7 @@
 module SqlSortSetup
 
 	def setup_sql_sort
-		model = controller_name.singularize.capitalize.constantize
+		model = controller_name.classify
     if model.is_a? SqlSearchableSortable
 			if params[:sort_by]
 				@sort_by = (params[:sort_by].split(' ').length > 1) ? 
