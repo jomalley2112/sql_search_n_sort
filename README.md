@@ -7,6 +7,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 
 \* *Currently it works on string, text, date and integer fields. At this point it appears that adding indexes will not improve performance due to the use of a leading wildcard in conjunction with LIKE comparisons. Only tested on SQLLite and MySQL at this point, but should work with others.*
 
+*Note: [ControllerScaffolding](https://github.com/jomalley2112/controller_scaffolding) includes SqlSearchNSort functionality and generates all the necessary code to get it up and running.*
 
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
 
@@ -17,12 +18,13 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 	class Person < ActiveRecord::Base
 		extend SqlSearchableSortable
 		sql_searchable :first_name, :last_name
-		sql_sortable   :first_name, :last_name, :email, :updated_at => {:show_asc => false, :display => "Date last changed"}
+		sql_sortable   :first_name, :last_name, :email, 
+										:updated_at => {:show_asc => false, :display => "Date last changed"}
 		
 		default_sql_sort :last_name #optional
 		
 		#NOTE: specifying order in your default_scope will cause sort functionality to break
-		#default_scope { order(:email) }
+		#default_scope { order(:email) } #If you've done this remove it!
 	end
 ```
 
@@ -48,7 +50,7 @@ class PeopleController < ApplicationController
 		@people = Person.sql_search(params[:search_for])
 	end
 	#OR
-	def sort_only_index #just sort functionality
+	def index #just sort functionality
 		@people = Person.sql_sort(@sort_by, (@sort_dir))
 	end
 end
