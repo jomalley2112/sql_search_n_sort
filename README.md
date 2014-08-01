@@ -32,6 +32,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 	end
 ```
 ---
+
 ##### Example index.html.haml #####
 ```haml
 %table
@@ -43,6 +44,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 		%tr
 ```
 ---
+
 ##### Example Controller #####
 ```ruby
 class PeopleController < ApplicationController
@@ -60,6 +62,7 @@ class PeopleController < ApplicationController
 end
 ```
 ---
+
 ##### Specifics #####
 1. Add to Gemfile: `gem "sql_search_n_sort"` then run `bundle install`
 2. Run `rails g sql_search_n_sort:install`
@@ -87,6 +90,7 @@ end
 		- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_sort, :only => [:index, :sort_only_index]`. You will need to add any actions named anything other than :index to this array and most likely remove :sort_only_index e.g. `before_filter :setup_sql_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_sort`, which could cause a minimal performance loss depending on how many actions are defined in your controller.
 6. Style to your liking
 ---
+
 #### Generator actions ####
 - Files that will be copied to your project:
 	- `app/views/application/_sort_form.html.haml`
@@ -96,10 +100,12 @@ end
 	- Adds an include and a before_filter call to `app/controllers/application_controller.rb`
 	- Adds `//= require jquery` to `app/assets/javascripts/application.js` if not already there.
 ---
+
 #### Testing ####
 * Generator tests: run `rake test` from the root directory.
 * Integration test specs: run `rspec spec` from 'test/dummy'
 ---
+
 #### Gem dependencies ####
 - Dependencies:
 	- "rails", "~> 4.0"
@@ -114,6 +120,7 @@ end
 	- "database_cleaner"
 	- "faker"
 ---
+
 #### TODO ####
 - Allow for case-sensitive and whole word searches
 - See if there's anyway to change *like* comparison to be more index friendly
