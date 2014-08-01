@@ -8,11 +8,13 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 \* *Currently it works on string, text, date and integer fields. At this point it appears that adding indexes will not improve performance due to the use of a leading wildcard in conjunction with LIKE comparisons. Only tested on SQLLite and MySQL at this point, but should work with others.*
 
 *Note: [ControllerScaffolding](https://github.com/jomalley2112/controller_scaffolding) includes SqlSearchNSort functionality and generates all the necessary code to get it up and running.*
+
 ---
 
 
 *screenshot of index page using both search and sort*
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
+
 ---
 
 #### Usage ####
