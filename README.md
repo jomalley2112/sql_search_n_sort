@@ -8,9 +8,12 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 \* *Currently it works on string, text, date and integer fields. At this point it appears that adding indexes will not improve performance due to the use of a leading wildcard in conjunction with LIKE comparisons. Only tested on SQLLite and MySQL at this point, but should work with others.*
 
 *Note: [ControllerScaffolding](https://github.com/jomalley2112/controller_scaffolding) includes SqlSearchNSort functionality and generates all the necessary code to get it up and running.*
+---
 
-##### Sample screenshot of index page using both search and sort #####
+
+*screenshot of index page using both search and sort*
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
+---
 
 #### Usage ####
 
@@ -28,7 +31,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 		#default_scope { order(:email) } #If you've done this remove it!
 	end
 ```
-
+---
 ##### Example index.html.haml #####
 ```haml
 %table
@@ -39,7 +42,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 				=render "search_form"
 		%tr
 ```
-
+---
 ##### Example Controller #####
 ```ruby
 class PeopleController < ApplicationController
@@ -56,7 +59,8 @@ class PeopleController < ApplicationController
 	end
 end
 ```
-
+---
+##### Specifics #####
 1. Add to Gemfile: `gem "sql_search_n_sort"` then run `bundle install`
 2. Run `rails g sql_search_n_sort:install`
 3. In model to be searched/sorted add the following lines (see Example Model above):
@@ -82,7 +86,7 @@ end
   `@people = Person.sql_search(params[:search_for]).sql_sort(@sort_by, @sort_dir)`
 		- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_sort, :only => [:index, :sort_only_index]`. You will need to add any actions named anything other than :index to this array and most likely remove :sort_only_index e.g. `before_filter :setup_sql_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_sort`, which could cause a minimal performance loss depending on how many actions are defined in your controller.
 6. Style to your liking
-
+---
 #### Generator actions ####
 - Files that will be copied to your project:
 	- `app/views/application/_sort_form.html.haml`
@@ -91,11 +95,11 @@ end
 - Other changes made by the generator
 	- Adds an include and a before_filter call to `app/controllers/application_controller.rb`
 	- Adds `//= require jquery` to `app/assets/javascripts/application.js` if not already there.
-	
+---
 #### Testing ####
 * Generator tests: run `rake test` from the root directory.
 * Integration test specs: run `rspec spec` from 'test/dummy'
-
+---
 #### Gem dependencies ####
 - Dependencies:
 	- "rails", "~> 4.0"
@@ -109,7 +113,7 @@ end
 	- "factory_girl_rails"
 	- "database_cleaner"
 	- "faker"
-
+---
 #### TODO ####
 - Allow for case-sensitive and whole word searches
 - See if there's anyway to change *like* comparison to be more index friendly
