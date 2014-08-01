@@ -9,6 +9,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 
 *Note: [ControllerScaffolding](https://github.com/jomalley2112/controller_scaffolding) includes SqlSearchNSort functionality and generates all the necessary code to get it up and running.*
 
+##### Sample screenshot of index page using both search and sort #####
 ![Example Screenshot](/readme_assets/ssns_scrshot.png?raw=true "Screenshot of gem at work.")
 
 #### Usage ####
@@ -19,7 +20,7 @@ Provides simple SQL-based* search and sort functionality (that work together or 
 		extend SqlSearchableSortable
 		sql_searchable :first_name, :last_name
 		sql_sortable   :first_name, :last_name, :email, 
-										:updated_at => {:show_asc => false, :display => "Date last changed"}
+		                :updated_at => {:show_asc => false, :display => "Date last changed"}
 		
 		default_sql_sort :last_name #optional
 		
@@ -91,7 +92,7 @@ end
 	- Adds an include and a before_filter call to `app/controllers/application_controller.rb`
 	- Adds `//= require jquery` to `app/assets/javascripts/application.js` if not already there.
 	
-### Testing ###
+#### Testing ####
 * Generator tests: run `rake test` from the root directory.
 * Integration test specs: run `rspec spec` from 'test/dummy'
 
