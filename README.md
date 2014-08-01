@@ -1,5 +1,5 @@
 # SqlSearchNSort #
-
+ 
 [![Gem Version](https://badge.fury.io/rb/sql_search_n_sort.svg)](http://badge.fury.io/rb/sql_search_n_sort)
 
 #### Description ####
