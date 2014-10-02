@@ -5,7 +5,7 @@
 #### Description ####
 Provides simple SQL-based* search and sort functionality (that work together or separately) for the index or any other page that lists out ActiveRecord models. Being SQL-driven it gives you search capability without making you run a separate full-text server like Solr. 
 
-\* *Currently it works on string, text, date and integer fields. At this point it appears that adding indexes will not improve performance due to the use of a leading wildcard in conjunction with LIKE comparisons. Only tested on SQLLite and MySQL at this point, but should work with others.*
+\* *Currently it works on string and text fields. Working on getting date and integer fields. At this point it appears that adding indexes will not improve performance due to the use of a leading wildcard in conjunction with LIKE comparisons. Only tested on SQLLite and MySQL at this point, but should work with others.*
 
 *Note: [ControllerScaffolding](https://github.com/jomalley2112/controller_scaffolding) includes SqlSearchNSort functionality and generates all the necessary code to get it up and running.*
 
