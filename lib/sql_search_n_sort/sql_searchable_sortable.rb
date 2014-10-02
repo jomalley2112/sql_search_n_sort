@@ -32,6 +32,9 @@ module SqlSearchableSortable
 	end
 
 	def sql_searchable(*cols)
+		#TODO: somehow first check if column's type can be compared to a string
+		# ...and remember it has to work with the lowest common denominator DB server...
+		# do a cast/conversion when building the query in above method???
 		self.sql_search_cols = (cols ||= [])
 			.select do |c| 
 				col_name = c.is_a?(Hash) ? col.keys.first.to_s : c.to_s
