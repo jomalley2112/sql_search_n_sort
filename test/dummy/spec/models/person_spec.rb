@@ -44,22 +44,24 @@ describe Person do
 				  	Person.sql_search("new jersey devils").count.should == 2
 				  end
 				end
-				describe "Date fields" do
-				  it "returns records with an updated at containing '2001'" do
-				  	Person.all[0].update_attribute :dob, "2001-07-25"
-				  	Person.all[1].update_attribute :dob, "2001-12-25"
-				  	Person.all[2].update_attribute :dob, "2001-11-11"
-				  	Person.sql_search("2001").count.should == 3
-				  end
-				end
-				describe "Integer fields" do
-				  it "returns records with a grade containing '26255'" do
-				  	Person.all[0].update_attribute :grade, 2526255
-				  	Person.all[1].update_attribute :grade, 12625525
-				  	Person.all[2].update_attribute :grade, 125262550
-				  	Person.sql_search("26255").count.should == 3
-				  end
-				end
+				# describe "Date fields" do
+				#   it "returns records with an updated at containing '2001'" do
+				#   	pending "removed sort by date functionality"
+				#   	Person.all[0].update_attribute :dob, "2001-07-25"
+				#   	Person.all[1].update_attribute :dob, "2001-12-25"
+				#   	Person.all[2].update_attribute :dob, "2001-11-11"
+				#   	Person.sql_search("2001").count.should == 3
+				#   end
+				# end
+				# describe "Integer fields" do
+				# 	it "returns records with a grade containing '26255'" do
+				# 		pending "removed sort by integer functionality"
+				#   	Person.all[0].update_attribute :grade, 2526255
+				#   	Person.all[1].update_attribute :grade, 12625525
+				#   	Person.all[2].update_attribute :grade, 125262550
+				#   	Person.sql_search("26255").count.should == 3
+				#   end
+				# end
 	  	end  
 
 		end

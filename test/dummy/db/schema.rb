@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725161555) do
+ActiveRecord::Schema.define(version: 20141003015903) do
 
   create_table "articles", force: true do |t|
     t.string   "headline"
@@ -41,6 +41,20 @@ ActiveRecord::Schema.define(version: 20140725161555) do
     t.integer  "price"
     t.datetime "date_produced"
     t.string   "manufacturer"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "unsearchables", force: true do |t|
+    t.integer  "int"
+    t.date     "dt"
+    t.time     "tm"
+    t.datetime "dtm"
+    t.boolean  "bool"
+    t.float    "flt"
+    t.decimal  "dec"
+    t.binary   "bn"
+    t.datetime "ts"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
