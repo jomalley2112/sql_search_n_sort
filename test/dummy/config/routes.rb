@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/vehicles" => 'vehicles#index'
   get "/search_vehicles" => 'vehicles#search_only_index'
   get "/sort_vehicles" => 'vehicles#sort_only_index'
+  get "/unsearchables" => 'unsearchables#index'
   
   # get "/people" => "people#index"
   # get "/person/:id" => ""
