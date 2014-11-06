@@ -4,10 +4,7 @@ module SqlSearchableSortable
   	base.class_eval do
   		attr_accessor :ssns_sortable
   		class << self
-  			attr_accessor :default_sort_col
-  			attr_accessor :default_sort_dir
-  			attr_accessor :sql_sort_cols
-  			attr_accessor :sql_search_cols
+  			attr_accessor :default_sort_col, :default_sort_dir, :sql_sort_cols, :sql_search_cols
   		end
 
 			#:Note remember when debugging from here "base" doesn't exist
@@ -35,6 +32,7 @@ module SqlSearchableSortable
 		self.sql_search_cols = (cols ||= [])
 			.select do |c| 
 				col_name = c.is_a?(Hash) ? col.keys.first.to_s : c.to_s
+				#raise exception if not string or text type field
 				raise(Exceptions::UnsearchableType.new(self, col_name)) \
 					if ![:string, :text].include?(self.columns_hash[col_name].type)
 				model_name.name.constantize.column_names.include?(col_name)
@@ -55,15 +53,14 @@ module SqlSearchableSortable
 	end
 	
 	def sort_cols_for_dropdown
-		sql_sort_cols = self.sql_sort_cols
-		sql_sort_cols ||= []
+		sql_sort_cols = self.sql_sort_cols ||= []
 		return sql_sort_cols.inject([]) do |m, col|
 			if col.is_a?(Hash) 
 				h = col.fetch(col.keys.first)
 				show_asc = h[:show_asc].nil? ? true : h[:show_asc]
 				show_desc = h[:showdesc].nil? ? true : h[:show_desc]
 				display_text = h[:display] || col.keys.first.to_s.humanize
-				m << [display_text, col.keys.first.to_s] if show_asc
+				m << ["#{display_text}", "#{col.keys.first}"] if show_asc
 				m << ["#{display_text} [desc]", "#{col.keys.first} desc"] if show_desc
 			else
 				m << [col.to_s.humanize, col.to_s]
