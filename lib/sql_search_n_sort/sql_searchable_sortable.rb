@@ -8,11 +8,13 @@ module SqlSearchableSortable
   		end
 
 			#:Note remember when debugging from here "base" doesn't exist
+			#These scopes get called on a model class from within an index action in a controller
+			# ...like a class method
 			scope :sql_search, ->(search_for) { where(search_clause(search_for)) }
 			
 			scope :sql_sort, ->(sort_by=nil, dir=nil) do
-				sort_by ||= default_sort_col
-				dir ||= default_sort_dir || :asc
+				sort_by ||= default_sort_col #use model's default sort col if no args present
+				dir ||= default_sort_dir || :asc #same for direction
 				if sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
 					order(sort_by => dir)
 				else
@@ -55,7 +57,7 @@ module SqlSearchableSortable
 	def sort_cols_for_dropdown
 		sql_sort_cols = self.sql_sort_cols ||= []
 		return sql_sort_cols.inject([]) do |m, col|
-			if col.is_a?(Hash) 
+			if col.is_a?(Hash)
 				h = col.fetch(col.keys.first)
 				show_asc = h[:show_asc].nil? ? true : h[:show_asc]
 				show_desc = h[:showdesc].nil? ? true : h[:show_desc]

@@ -69,21 +69,24 @@ end
 ##### Specifics #####
 1. Add to Gemfile: `gem "sql_search_n_sort"` then run `bundle install`
 2. Run `rails g sql_search_n_sort:install`
-3. In model to be searched/sorted add the following lines (see Example Model above):
+3. Add the following lines to the model (see Example Model above):
 	- `extend SqlSearchableSortable`
-	- `sql_searchable :col1, :col2, :col3 #...` and/or `sql_sortable :col1, :col2, :col3 => { show_desc: false, display: "Column Three"}, #...`
-		- sql_sortable takes some optional hash option values: 
-			- `show_asc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in ascending order?
-			- `show_desc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in descending order? 
-			- `display: "Column display text"` - The text displayed for this column in the Sort by dropdown.
-	- and optionally you can specify the default ordering column in the model file with or without the :desc option (specifying descending default sort direction)
-		-	`default_sql_sort :sortable_col1 [, :desc]`
-			- NOTE: specifying order in the model's default_scope will cause sql_sort functionality to break
-4. Views (see Example index.html.haml above): 
+	- Search:
+		- `sql_searchable :col1, :col2, :col3 #...`
+	- Sort:
+		- `sql_sortable :col1, :col2, :col3 => { show_desc: false, display: "Column Three"}, #...`
+			- each column parameter passed in can add an optional hash to specify a few options: 
+				- `show_asc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in ascending order?
+				- `show_desc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in descending order? 
+				- `display: "Column display text"` - The text displayed for this column in the Sort by dropdown.
+		- and optionally you can specify the default ordering column in the model file with or without the :desc option (specifying descending default sort direction):
+			-	`default_sql_sort :sortable_col1 [, :desc]`
+				- NOTE: specifying order in the model's default_scope will cause sql_sort functionality to break
+5. Views (see Example index.html.haml above): 
 	- In view file for page to include search functionality add the following code in the position where you want the search unit to be located: `= render 'search_form'`
 	- In view file for page to include search functionality add the following code in the position where you want the sort unit to be located: `= render 'sort_form' #, :opts => @sort_dropdown_opts`
 		- Note that the `:opts => @sort_dropdown_opts` is optional and may be included if you feel better about only using local variables in your partials or if for some reason you want to manually define your own set of options for the sort select list (not recommended).
-5. In the controller action (usually #index) add the following (See Example Controller above):
+6. In the controller action (usually #index) add the following (See Example Controller above):
 	- For just Search
 	`@people = Person.sql_search(params[:search_for])`
 	- For just Sort:
