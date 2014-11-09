@@ -26,7 +26,7 @@ Also, at this point it appears that adding indexes will not improve performance 
 		extend SqlSearchableSortable
 		sql_searchable :first_name, :last_name
 		sql_sortable   :first_name, :last_name, :email, 
-		                :updated_at => {:show_asc => false, :display => "Date last changed"}
+		                :updated_at => {:show_asc => false, :display_text => "Date last changed"}
 		
 		default_sql_sort :last_name #optional
 		
@@ -74,11 +74,11 @@ end
 	- Search:
 		- `sql_searchable :col1, :col2, :col3 #...`
 	- Sort:
-		- `sql_sortable :col1, :col2, :col3 => { show_desc: false, display: "Column Three"}, #...`
+		- `sql_sortable :col1, :col2, :col3 => { show_desc: false, display_text: "Column Three"}, #...`
 			- each column parameter passed in can add an optional hash to specify a few options: 
 				- `show_asc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in ascending order?
 				- `show_desc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in descending order? 
-				- `display: "Column display text"` - The text displayed for this column in the Sort by dropdown.
+				- `display_text: "Column display text"` - The text displayed for this column in the Sort by dropdown.
 		- and optionally you can specify the default ordering column in the model file with or without the :desc option (specifying descending default sort direction):
 			-	`default_sql_sort :sortable_col1 [, :desc]`
 				- NOTE: specifying order in the model's default_scope will cause sql_sort functionality to break
