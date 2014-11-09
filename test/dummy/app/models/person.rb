@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
 
 	sql_searchable :first_name, :last_name, :bio 
 	sql_sortable 	 :first_name, :last_name, :email, 
-		:updated_at => {:show_asc => false, :display => "Date last changed"}
+		:updated_at => {:show_asc => false, :display_text => "Date last changed"}
 	
 	default_sql_sort :last_name
 end
