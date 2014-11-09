@@ -4,20 +4,18 @@ module SqlSearchableSortable
   	base.class_eval do
   		attr_accessor :ssns_sortable
   		class << self
-  			attr_accessor :default_sort_col, :default_sort_dir, :sql_sort_cols, :sql_search_cols
+  			attr_accessor :default_sort_col, :default_sort_dir, :sql_search_cols, :sort_config
   		end
 
 			#:Note remember when debugging from here "base" doesn't exist
+			#These scopes get called on a model class from within an index action in a controller
+			# ...like a class method
 			scope :sql_search, ->(search_for) { where(search_clause(search_for)) }
 			
-			scope :sql_sort, ->(sort_by=nil, dir=nil) do
-				sort_by ||= default_sort_col
-				dir ||= default_sort_dir || :asc
-				if sql_sort_cols.any? { |c| c.is_a?(Hash) ? c.has_key?(sort_by) : c == sort_by }
-					order(sort_by => dir)
-				else
-					default_sort_col ? order(default_sort_col => dir) : order(nil)
-				end
+			scope :sql_sort, ->(scope_sort_col=nil, scope_sort_dir=nil) do
+				scope_sort_col ||= default_sort_col #use model's default sort col if no args present
+				scope_sort_dir ||= default_sort_dir || :asc #same for direction
+				order(sort_config.get_order(scope_sort_col, scope_sort_dir, default_sort_col))
 			end
 		end
 	end
@@ -40,7 +38,7 @@ module SqlSearchableSortable
 	end
 
 	def sql_sortable(*cols)
-		self.sql_sort_cols = cols
+		self.sort_config = ModelSortConfig.new(*cols)
 	end
 
 	def default_sql_sort(col, dir=nil)
@@ -49,25 +47,52 @@ module SqlSearchableSortable
 	end
 
 	def sortable?
-		!!sql_sort_cols
+		!!sort_config
 	end
 	
 	def sort_cols_for_dropdown
-		sql_sort_cols = self.sql_sort_cols ||= []
-		return sql_sort_cols.inject([]) do |m, col|
-			if col.is_a?(Hash) 
-				h = col.fetch(col.keys.first)
-				show_asc = h[:show_asc].nil? ? true : h[:show_asc]
-				show_desc = h[:showdesc].nil? ? true : h[:show_desc]
-				display_text = h[:display] || col.keys.first.to_s.humanize
-				m << ["#{display_text}", "#{col.keys.first}"] if show_asc
-				m << ["#{display_text} [desc]", "#{col.keys.first} desc"] if show_desc
-			else
-				m << [col.to_s.humanize, col.to_s]
-				m << ["#{col.to_s.humanize} [desc]", "#{col} desc"]
-			end 
+		self.sort_config ||= []
+		return sort_config.inject([]) do |m, col_conf|
+			m << ["#{col_conf.display_text || col_conf.column.to_s.humanize}",        "#{col_conf.column.to_s}"]      if col_conf.show_asc
+			m << ["#{col_conf.display_text || col_conf.column.to_s.humanize} [desc]", "#{col_conf.column.to_s} desc"] if col_conf.show_desc
 			m
 		end 
+	end
+
+	class ModelSortConfig < Array
+		
+		def initialize(*cols)
+			cols.each do |col|
+				if col.is_a? Hash
+					h = col.fetch(col.keys.first)
+					self << SortColumn.new(col.keys.first, h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true))
+				else
+					self << SortColumn.new(col)
+				end
+			end
+		end
+
+		def get_order(sort_by, dir, def_sort_col)
+			if self.contains_column(sort_by)
+				{sort_by => dir}
+			else
+				{def_sort_col => dir} if def_sort_col
+			end
+		end
+	 	
+		def contains_column(col)
+			self.any? { |sc| sc.column == col }
+		end
+	end
+	
+	class SortColumn
+		attr_reader :column, :show_asc, :show_desc ,:display_text
+		def initialize(column, display_text=nil, show_asc=true, show_desc=true)
+			@column = column
+			@display_text = display_text
+			@show_asc = show_asc
+			@show_desc = show_desc
+		end
 	end
 
 end
