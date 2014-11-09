@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sql_search_n_sort (2.0.0)
+    sql_search_n_sort (2.0.1)
       haml-rails
       jquery-rails
       nokogiri (= 1.6.3.1)
