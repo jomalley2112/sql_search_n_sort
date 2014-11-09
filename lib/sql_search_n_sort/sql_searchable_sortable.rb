@@ -4,8 +4,7 @@ module SqlSearchableSortable
   	base.class_eval do
   		attr_accessor :ssns_sortable
   		class << self
-  			attr_accessor :default_sort_col, :default_sort_dir, :sql_search_cols
-  			attr_reader :sort_config
+  			attr_accessor :default_sort_col, :default_sort_dir, :sql_search_cols, :sort_config
   		end
 
 			#:Note remember when debugging from here "base" doesn't exist
@@ -39,7 +38,7 @@ module SqlSearchableSortable
 	end
 
 	def sql_sortable(*cols)
-		self.sort_config = ModelSortConfig.new(cols)
+		self.sort_config = ModelSortConfig.new(*cols)
 	end
 
 	def default_sql_sort(col, dir=nil)
@@ -52,10 +51,10 @@ module SqlSearchableSortable
 	end
 	
 	def sort_cols_for_dropdown
-		sort_config = self.sort_config ||= []
+		self.sort_config ||= []
 		return sort_config.inject([]) do |m, col_conf|
-			m << ["#{col_conf.display_text || col_conf.to_s.humanize}",        "#{col_conf.column.to_s}"]      if col_conf.show_asc
-			m << ["#{col_conf.display_text || col_conf.to_s.humanize} [desc]", "#{col_conf.column.to_s} desc"] if col_conf.show_desc
+			m << ["#{col_conf.display_text || col_conf.column.to_s.humanize}",        "#{col_conf.column.to_s}"]      if col_conf.show_asc
+			m << ["#{col_conf.display_text || col_conf.column.to_s.humanize} [desc]", "#{col_conf.column.to_s} desc"] if col_conf.show_desc
 			m
 		end 
 	end
@@ -66,7 +65,7 @@ module SqlSearchableSortable
 			cols.each do |col|
 				if col.is_a? Hash
 					h = col.fetch(col.keys.first)
-					self << SortColumn.new(col.keys.first, h[:display_text], h[:show_asc], h[:show_desc])
+					self << SortColumn.new(col.keys.first, h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true))
 				else
 					self << SortColumn.new(col)
 				end
@@ -80,11 +79,10 @@ module SqlSearchableSortable
 				{def_sort_col => dir} if def_sort_col
 			end
 		end
-		
-		#private
-			def contains_column(col)
-				self.any? { |sc| sc.column == col }
-			end
+	 	
+		def contains_column(col)
+			self.any? { |sc| sc.column == col }
+		end
 	end
 	
 	class SortColumn

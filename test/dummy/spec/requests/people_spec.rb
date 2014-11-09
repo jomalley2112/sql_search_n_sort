@@ -120,7 +120,7 @@ describe "People" do
       		sleep 1
       		p2 = FactoryGirl.create(:person, :email => "p2@domain.com")
       		visit sort_people_path
-      		select("Date last changed [desc]", :from => "sort_by")
+          select("Date last changed [desc]", :from => "sort_by")
       		emails = all(:xpath, "//table/tbody/tr/td[3]")
       		emails[0].text.should eq p2.email
       		emails[1].text.should eq p1.email
