@@ -51,12 +51,7 @@ module SqlSearchableSortable
 	end
 	
 	def sort_cols_for_dropdown
-		self.sort_config ||= []
-		return sort_config.inject([]) do |m, col_conf|
-			m << ["#{col_conf.display_text || col_conf.column.to_s.humanize}",        "#{col_conf.column.to_s}"]      if col_conf.show_asc
-			m << ["#{col_conf.display_text || col_conf.column.to_s.humanize} [desc]", "#{col_conf.column.to_s} desc"] if col_conf.show_desc
-			m
-		end 
+		sort_config.select_opts 
 	end
 
 	class ModelSortConfig < Array
@@ -83,6 +78,12 @@ module SqlSearchableSortable
 		def contains_column(col)
 			self.any? { |sc| sc.column == col }
 		end
+
+		def select_opts
+			return self.inject([]) do |m, sort_col|
+				m + sort_col.select_opts
+			end 
+		end
 	end
 	
 	class SortColumn
@@ -92,6 +93,18 @@ module SqlSearchableSortable
 			@display_text = display_text
 			@show_asc = show_asc
 			@show_desc = show_desc
+		end
+		def name
+			column.to_s
+		end
+		def human_name
+			name.humanize
+		end
+		def select_opts
+			arr = []
+			arr << ["#{display_text || human_name}",        "#{name}"]      if show_asc
+			arr << ["#{display_text || human_name} [desc]", "#{name} desc"] if show_desc
+			return arr
 		end
 	end
 
