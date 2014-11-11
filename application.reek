@@ -1,9 +1,28 @@
 ---
+UncommunicativeVariableName:
+  enabled: false
+DuplicateMethodCall:
+  enabled: true
+  exclude: []
+  max_calls: 2
+  allow_calls: []
+IrresponsibleModule:
+  enabled: false
+TooManyStatements:
+  enabled: true
+  exclude:
+  - initialize
+  max_statements: 10
+BooleanParameter:
+  enabled: false
+  exclude: []
+UtilityFunction:
+  enabled: true
+  exclude: [initialize]
+  max_helper_calls: 1
+
 # Attribute:
 # enabled: false
-# exclude: []
-# BooleanParameter:
-# enabled: true
 # exclude: []
 # ClassVariable:
 # enabled: true
@@ -16,16 +35,9 @@
 # exclude: []
 # max_copies: 2
 # min_clump_size: 2
-# DuplicateMethodCall:
-# enabled: true
-# exclude: []
-# max_calls: 1
-# allow_calls: []
 # FeatureEnvy:
 # enabled: true
 # exclude: []
-IrresponsibleModule:
-  enabled: false
 # exclude: []
 # LongParameterList:
 # enabled: true
@@ -61,11 +73,6 @@ IrresponsibleModule:
 # enabled: true
 # exclude: []
 # max_methods: 25
-# TooManyStatements:
-# enabled: true
-# exclude:
-# - initialize
-# max_statements: 5
 # UncommunicativeMethodName:
 # enabled: true
 # exclude: []
@@ -91,8 +98,6 @@ IrresponsibleModule:
 # - !ruby/regexp /[A-Z]/
 # - !ruby/regexp /^_/
 # accept: []
-UncommunicativeVariableName:
-  enabled: false
 # exclude: []
 # reject:
 # - !ruby/regexp /^.$/
