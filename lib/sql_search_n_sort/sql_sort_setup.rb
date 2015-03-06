@@ -1,7 +1,8 @@
 module SqlSortSetup
 
-	def setup_sql_sort
-		model = controller_name.classify.constantize
+	def setup_sql_sort(model_class=nil)
+		#Get model class from class if passed in or by guessing at controller
+		model = model_class || controller_name.classify.constantize 
     if model.is_a? SqlSearchableSortable
 			if sort_by
 				@sort_by = (sort_by.split.length > 1) ? 

@@ -1,0 +1,19 @@
+%h4 Listing Members
+%table
+	%thead
+		%tr
+			%td{:colspan => 3, :style => "padding-bottom: 15px;"}
+				=render "sort_form"
+			%td
+				=render "search_form"
+		%tr
+			%th First name
+			%th Last name
+			%th Email
+	%tbody
+	- @members.each do |member|
+		%tr
+			%td= member.first_name
+			%td= member.last_name
+			%td= member.email
+			
