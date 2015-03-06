@@ -9,6 +9,12 @@ FactoryGirl.define do
     sequence(:nickname) { |n| "nick_#{n}" }
   end
 
+  factory :member, class: Admin::Member do
+    sequence(:first_name) { |n| "John_#{n}" }
+    sequence(:last_name) { |n| "Doe_#{n}" }
+    sequence(:email) { |n| "johndoesemail_#{n}@domain.com"}
+  end
+
   factory :vehicle do
   	year 2010
   	manufacturer "Chevrolet"

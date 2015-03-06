@@ -94,7 +94,10 @@ end
 	- For both Search & Sort:
   `@people = Person.sql_search(params[:search_for]).sql_sort(@sort_by, @sort_dir)`
 		- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_sort, :only => [:index, :sort_only_index]`. You will need to add any actions named anything other than :index to this array and most likely remove :sort_only_index e.g. `before_filter :setup_sql_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_sort`, which could cause a minimal performance loss depending on how many actions are defined in your controller.
-6. Style to your liking
+7. If your resource is scoped/namespaced you will want to: 
+	- alter the following before\_filter line in application\_controller.rb `before_filter :setup_sql_sort [,...]` to make sure that your controller action does not cause it to execute. (You can either comment out the line or employ the :except or :only parameters.)
+	- If you are using the sort functionality... in the first line of your controller action call `setup_sql_sort(Fully::Namespaced::ModelName)` 
+8. Style to your liking
 
 ---
 
