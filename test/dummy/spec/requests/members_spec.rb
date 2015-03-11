@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+#Them main reason for this spec is to test the functionality of allowing a class to be explicitly
+# passed to 'setup_sql_sort()' in the controller when the model to be sorted is namespaced
 describe "Members" do
   before(:all) do
     run_generator

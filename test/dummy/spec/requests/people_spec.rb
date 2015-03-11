@@ -178,5 +178,13 @@ describe "People" do
       	current_url.should match("aged=43")
       end
     end
+
+    describe "handles SQL injection issue" do
+      it "sanitizes values passed in the search_for parameter" do
+        
+        expect{ visit(people_path(search_for: "'")) }.not_to raise_error
+        # page.should have_selector("input#search_for")
+      end
+    end
   end
 end
