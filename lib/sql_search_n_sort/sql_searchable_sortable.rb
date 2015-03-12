@@ -10,9 +10,9 @@ module SqlSearchableSortable
 			#:Note remember when debugging from here "base" doesn't exist
 			#These scopes get called on a model class from within an index action in a controller
 			# ...like a class method
-			scope :sql_search, ->(search_for) { 
-				where(search_clause(search_for)) 
-			}
+			scope :sql_search, ->(search_for="") do 
+				search_for.blank? ? all : where(search_clause(search_for)) 
+			end
 			
 			scope :sql_sort, ->(scope_sort_col=nil, scope_sort_dir=nil) do
 				scope_sort_col ||= default_sort_col #use model's default sort col if no args present
@@ -23,8 +23,8 @@ module SqlSearchableSortable
 	end
 
 	def search_clause(search_for)
-		(sql_search_cols || []).inject("1=2 ") do |m, col|
-			m << " or #{col} like '%#{search_for}%'"
+		(sql_search_cols || []).inject(Arel::Nodes::Group.new(2==1)) do |m, col|
+				m.or self.arel_table[col].matches("%#{search_for}%")
 		end
 	end
 
