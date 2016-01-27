@@ -62,7 +62,7 @@ module SqlSearchableSortable
 			cols.each do |col|
 				if col.is_a? Hash
 					h = col.fetch(col.keys.first)
-					self << SortColumn.new(col.keys.first, h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true))
+					self << SortColumn.new(col.keys.first, h[:db_table], h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true))
 				else
 					self << SortColumn.new(col)
 				end

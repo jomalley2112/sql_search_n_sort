@@ -25,18 +25,24 @@ FactoryGirl.define do
 
   factory :product do
     sequence(:name) { |n| "cog_#{n}" }
-    descr { "random description #{Random.rand(1..20)}" }
-    price { "#{Random.rand(1..250)}" }
-    date_produced { Time.now - Random.rand(1..100).days }
-    manufacturer { "Company #{Random.rand(1..5)}" } 
+    sequence(:descr) { |n| "random description #{n}" }
+    sequence(:price) { |n| "#{n}" }
+    sequence(:date_produced) { |n| Time.now - n.days }
+    sequence(:manufacturer) { |n| "Company #{n}" } 
   end
 
 
   factory :article do
-    headline "Headline #{Random.rand(1..100)}"
-    by_line "Journalist #{Random.rand(1..5)}"
-    date_pub { Time.now - Random.rand(1..100).days }
-    body "The main article... #{Random.rand(0..50)}"
+    sequence(:headline) { |n| "Headline #{n}" }
+    sequence(:by_line) { |n| "Journalist #{n}" }
+    sequence(:date_pub) { |n| Time.now - n.days }
+    sequence(:body) { |n| "The main article... #{n}" }
+  end
+
+  factory :comment do
+    article
+    sequence(:ctext) { |n| "These are comments __#{n}__" }
+    sequence(:commentator) { |n| "myHandle_#{n}" }
   end
 
 end
