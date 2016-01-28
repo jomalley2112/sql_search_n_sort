@@ -6,4 +6,12 @@ module SqlSearchNSort
 	require "factory_girl_rails" if Rails.env == 'test'
 	require "haml-rails"
 	require "jquery-rails"
+
+	class Engine < Rails::Engine
+	end
+
+	def self.config(&block)
+    yield Engine.config if block
+    Engine.config
+  end
 end
