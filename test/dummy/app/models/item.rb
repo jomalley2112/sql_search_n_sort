@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
 	extend SqlSearchableSortable
-	sql_searchable :no_table
+	sql_searchable :name, :descr
+	sql_sortable :name, :descr
 end
