@@ -5,6 +5,7 @@ module SqlSearchNSort
 		source_paths << File.expand_path('../views/application', __FILE__)
 		source_paths << File.expand_path('../assets/javascripts', __FILE__)
 		source_paths << File.expand_path('../helpers', __FILE__)
+		source_paths << File.expand_path('../config/initializers', __FILE__)
 
 		def copy_files
 			base_path = "app/views/application"
@@ -13,6 +14,9 @@ module SqlSearchNSort
 
       base_path = "app/assets/javascripts"
       copy_file('sql_search_n_sort.js', File.join(base_path, 'sql_search_n_sort.js'))
+
+      base_path = "config/initializers"
+      copy_file('sql_search_n_sort.rb', File.join(base_path, 'sql_search_n_sort.rb'))
       
 		end
 
