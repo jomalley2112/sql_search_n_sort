@@ -11,7 +11,8 @@ describe "Items" do
   end
 
   describe "Allows exiting url parameters to be suppressed when searching" do
-    context "When unwanted parameter names are specified in ??????" do
+    context "When unwanted parameter names are specified in the sql_search_n_sort config" do
+    	before { SqlSearchNSort.config.suppress_search_params = ["restricted_1", "restricted_2"] }
 	    it "doesn't pass them along to the Item#index action" do
 	    	# binding.pry
 	    	visit items_path(good_param: "good", restricted_1: "bad", restricted_2: "bad")
