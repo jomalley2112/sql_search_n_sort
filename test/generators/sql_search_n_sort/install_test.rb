@@ -1,13 +1,10 @@
 require 'test_helper'
 require 'generators/sql_search_n_sort/install_generator'
 
-#module SqlSearchNSort
 class InstallGeneratorTest < Rails::Generators::TestCase
   
   tests SqlSearchNSort::InstallGenerator
 	destination File.expand_path("../tmp", File.dirname(__FILE__))
-  
-  #File.expand_path("../sql_search_n_sort/test/generators/sql_search_n_sort/dummy_files", File.dirname(__FILE__))
 
   def setup
     @args = ["--quiet", "--force"]
@@ -58,7 +55,6 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     def copy_dummy_files
       dummy_file_dir = File.expand_path("../dummy_test_files", __FILE__)
       FileUtils.cp_r("#{dummy_file_dir}/app", "#{destination_root}/app")
-      # FileUtils.cp_r("#{dummy_file_dir}/config", "#{destination_root}/config")
     end
 
 end
