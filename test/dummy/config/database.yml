@@ -19,10 +19,10 @@ development:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: sql-search-n-sort_development 
+  database: ssns_development 
   pool: 5
-  username: root
-  password: tool
+  username: ssns
+  password: toolman1
   socket: /tmp/mysql.sock
   timeout: 5000
 
@@ -30,10 +30,10 @@ test:
   adapter: mysql2
   encoding: utf8
   reconnect: false
-  database: sql-search-n-sort_test
+  database: ssns_test
   pool: 5
-  username: root
-  password: tool
+  username: ssns
+  password: toolman1
   socket: /tmp/mysql.sock
   timeout: 5000
 
@@ -43,8 +43,8 @@ test:
 #   reconnect: false
 #   database: sql-search-n-sort_production
 #   pool: 5
-#   username: root
-#   password: tool
+#   username: ssns
+#   password: toolman1
 #   socket: /tmp/mysql.sock
 #   timeout: 5000
 
