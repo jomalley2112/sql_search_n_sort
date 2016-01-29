@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 20160128023040) do
     t.time     "tm"
     t.datetime "dtm"
     t.boolean  "bool"
-    t.float    "flt"
-    t.decimal  "dec"
+    t.float    "flt",        limit: 24
+    t.decimal  "dec",                   precision: 10, scale: 0
     t.binary   "bn"
     t.datetime "ts"
     t.datetime "created_at"
