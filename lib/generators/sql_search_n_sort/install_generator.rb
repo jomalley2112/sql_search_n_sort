@@ -21,9 +21,18 @@ module SqlSearchNSort
 		end
 
 		def require_jquery
-			binding.pry
-			# create_file "app/assets/javascripts/application.js" unless File.exists?("app/assets/javascripts/application.js")
-			inject_into_file "app/assets/javascripts/application.js",
+
+			 
+			if File.exists?("app/assets/javascripts/application.js.coffee")
+				app_js_fl = "application.js.coffee"
+			elsif File.exists?("app/assets/javascripts/application.js")
+				app_js_fl = "application.js"
+			else
+				create_file "app/assets/javascripts/application.js"
+				app_js_fl = "application.js"
+			end
+
+			inject_into_file "app/assets/javascripts/#{app_js_fl}",
 		    before: "\n//= require_tree ." do
 		      "\n//= require jquery"
 		    end
