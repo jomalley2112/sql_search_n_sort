@@ -189,3 +189,6 @@ DEPENDENCIES
   selenium-webdriver
   sql_search_n_sort!
   tzinfo-data
+
+BUNDLED WITH
+   1.10.6
