@@ -17,25 +17,20 @@ module SqlSearchNSort
 
       base_path = "config/initializers"
       copy_file('sql_search_n_sort.rb', File.join(base_path, 'sql_search_n_sort.rb'))
+
+      base_path = "app/assets/javascripts"
+      copy_file('sql_search_n_sort.js', File.join(base_path, 'sql_search_n_sort.js'))
       
 		end
 
-		# def create_app_css_if_needed
-		# 	binding.pry
-		# 	# create_file "app/assets/javascripts/application.js" unless
-		# end
-
 		def require_jquery
-			# binding.pry
-			# create_file "app/assets/javascripts/application.js"
-			inject_into_file "app/assets/javascripts/application.js",
+			#could be either application.js or application.js.coffee or maybe something else in the future
+			if app_js_fl = Dir["#{destination_root}/app/assets/javascripts/*"].select{|f| f =~ /application\.js/}.first
+				inject_into_file app_js_fl,
 		    before: "\n//= require_tree ." do
 		      "\n//= require jquery"
 		    end
-		  inject_into_file "app/assets/javascripts/application.js.coffee",
-		    before: "\n//= require_tree ." do
-		      "\n//= require jquery"
-		    end
+			end
 		end
 
 		def insert_into_app_controller

@@ -46,6 +46,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
       assert_match(/before_filter :setup_sql_sort, :only => \[:index/, app_ctrlr)
     end
 
+    #This test will fail if there is an application.js.coffee instead of an application.js
     assert_file "app/assets/javascripts/application.js" do |app_js|
       assert_match(/\/\/= require jquery/, app_js)
     end
