@@ -1,4 +1,5 @@
 require 'rails/generators'
+
 module SqlSearchNSort
 	class InstallGenerator < Rails::Generators::Base
 
@@ -17,10 +18,6 @@ module SqlSearchNSort
 
       base_path = "config/initializers"
       copy_file('sql_search_n_sort.rb', File.join(base_path, 'sql_search_n_sort.rb'))
-
-      base_path = "app/assets/javascripts"
-      copy_file('sql_search_n_sort.js', File.join(base_path, 'sql_search_n_sort.js'))
-      
 		end
 
 		def require_jquery
