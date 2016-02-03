@@ -1,4 +1,5 @@
 require 'rails/generators'
+
 module SqlSearchNSort
 	class InstallGenerator < Rails::Generators::Base
 
@@ -21,20 +22,13 @@ module SqlSearchNSort
 		end
 
 		def require_jquery
-			# if File.exists?("app/assets/javascripts/application.js.coffee")
-			# 	app_js_fl = "application.js.coffee"
-			# elsif File.exists?("app/assets/javascripts/application.js")
-			# 	app_js_fl = "application.js"
-			# else
-			# 	# create_file "app/assets/javascripts/application.js"
-			# 	# app_js_fl = "application.js"
-			# end
-
-			app_js_fl = "application.js"
-			inject_into_file "app/assets/javascripts/#{app_js_fl}",
+			#could be either application.js or application.js.coffee or maybe something else in the future
+			if app_js_fl = Dir["app/assets/javascripts/*"].select{|f| f =~ /application/}.first
+				inject_into_file app_js_fl,
 		    before: "\n//= require_tree ." do
 		      "\n//= require jquery"
 		    end
+			end
 		end
 
 		def insert_into_app_controller
