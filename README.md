@@ -100,7 +100,7 @@ end
 4. If your resource is scoped/namespaced you will want to: 
 	- alter the following before\_filter line in application\_controller.rb `before_filter :setup_sql_sort [,...]` to make sure that your controller action does not cause it to execute. (You can either comment out the line or employ the :except or :only parameters.)
 	- If you are using the sort functionality... in the first line of your controller action call `setup_sql_sort(Fully::Namespaced::ModelName)` 
-5. If there are certain application parameters that you don't want passed along when performing a search you can add them to the `config.suppress_search_params` array in 'config/initializers/sql_search_n_sort'. This was implemented to avoid issues like using pagination gem kaminari and being on a page other than the first and then having a search return less results causing the page to be empty. (config.suppress_search_params = ["page"])
+5. If there are certain application parameters that you don't want passed along when performing a search or sort you can add them to the arrays defined in `config.suppress_params` in 'config/initializers/sql_search_n_sort'. This was implemented to avoid issues like using pagination gem kaminari and being on a page other than the first and then having a search return less results causing the page to be empty. (search: ["page"])
 6. Ad CSS to your liking
 
 ---
