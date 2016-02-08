@@ -1,13 +1,10 @@
 require 'test_helper'
 require 'generators/sql_search_n_sort/install_generator'
 
-#module SqlSearchNSort
 class InstallGeneratorTest < Rails::Generators::TestCase
   
   tests SqlSearchNSort::InstallGenerator
 	destination File.expand_path("../tmp", File.dirname(__FILE__))
-  
-  #File.expand_path("../sql_search_n_sort/test/generators/sql_search_n_sort/dummy_files", File.dirname(__FILE__))
 
   def setup
     @args = ["--quiet", "--force"]
@@ -23,10 +20,12 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     assert_no_file "app/views/application/_sort_form.html.haml"
     assert_no_file "app/views/application/_search_form.html.haml"
     assert_no_file "app/assets/javascripts/sql_search_n_sort.js"
+    assert_no_file "config/initializers/sql_search_n_sort.rb"
     run_generator @args
     assert_file "app/views/application/_sort_form.html.haml"
     assert_file "app/views/application/_search_form.html.haml"
     assert_file "app/assets/javascripts/sql_search_n_sort.js"
+    assert_file "config/initializers/sql_search_n_sort.rb"
   end
 
   test "Assert lines have been inserted into proper files" do
@@ -47,6 +46,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
       assert_match(/before_filter :setup_sql_sort, :only => \[:index/, app_ctrlr)
     end
 
+    #This test will fail if there is an application.js.coffee instead of an application.js
     assert_file "app/assets/javascripts/application.js" do |app_js|
       assert_match(/\/\/= require jquery/, app_js)
     end

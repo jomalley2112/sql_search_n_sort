@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "/search_vehicles" => 'vehicles#search_only_index'
   get "/sort_vehicles" => 'vehicles#sort_only_index'
   get "/unsearchables" => 'unsearchables#index'
+  get "/items" => "items#index"
 
   scope module: "admin" do
     get "members" => 'members#index_explicit_setup', as: 'admin_members'

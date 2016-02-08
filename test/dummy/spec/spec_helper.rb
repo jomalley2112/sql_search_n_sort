@@ -72,6 +72,8 @@ def run_generator
   %x(#{cmd_str})
   #Need to reload ApplicationController because it was edited by the generator
   load "#{ Rails.root }/app/controllers/application_controller.rb"
+  #Need to reload because it was created by generator
+  load("#{Rails.root}/config/initializers/sql_search_n_sort.rb")
 end
 
 def run_destroy

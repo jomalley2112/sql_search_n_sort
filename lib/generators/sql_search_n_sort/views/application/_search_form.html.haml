@@ -1,3 +1,4 @@
+- @mode = :search
 %form{id: "search-form"}
 	= hide_current_params("search_for").html_safe
 	=text_field_tag :search_for, params[:search_for], :placeholder => "Search"
