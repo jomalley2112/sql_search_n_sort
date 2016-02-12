@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121020730) do
-
+ActiveRecord::Schema.define(version: 20160128023040) do
 
   create_table "articles", force: true do |t|
     t.string   "headline"
@@ -31,6 +30,10 @@ ActiveRecord::Schema.define(version: 20160121020730) do
     t.integer  "article_id"
   end
 
+  create_table "items", force: true do |t|
+    t.string "name"
+    t.text   "descr"
+  end
 
   create_table "members", force: true do |t|
     t.string   "first_name"
