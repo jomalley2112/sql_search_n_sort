@@ -74,11 +74,12 @@ module SqlSearchableSortable
 		end
 
 		def get_order(sort_by, dir, def_sort_col)
-			if self.contains_column(sort_by)
-				{sort_by => dir}
-			else
-				{def_sort_col => dir} if def_sort_col
-			end
+			# if self.contains_column(sort_by)
+				# {sort_by => dir}
+				Article.arel_table[:headline].send(dir)
+			# else
+			# 	{def_sort_col => dir} if def_sort_col
+			# end
 		end
 	 	
 		def contains_column(col)
