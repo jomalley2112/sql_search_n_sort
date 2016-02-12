@@ -1,5 +1,8 @@
 module SqlSearchableSortable
 
+	#NOTES:
+	#Comment.joins(:article).order(Article.arel_table[:headline]).to_sql=> "SELECT `comments`.* FROM `comments` INNER JOIN `articles` ON `articles`.`id` = `comments`.`article_id`  ORDER BY `articles`.`headline`"
+
   def self.extended(base)
   	base.class_eval do
   		attr_accessor :ssns_sortable
@@ -59,11 +62,11 @@ module SqlSearchableSortable
 	class ModelSortConfig < Array
 		
 		def initialize(*cols)
+
 			cols.each do |col|
 				if col.is_a? Hash
-					h = col.fetch(col.keys.first)
-					# opts = {column: col.keys.first, h[:db_table], h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true)}
-					self << SortColumn.new({column: col.keys.first}.merge(h))
+					opts_hash = col.fetch(col.keys.first)
+					self << SortColumn.new(col.keys.first, opts_hash)
 				else
 					self << SortColumn.new(col)
 				end
@@ -91,18 +94,12 @@ module SqlSearchableSortable
 	
 	class SortColumn
 		attr_reader :column, :db_table, :show_asc, :show_desc ,:display_text
-		def initialize(opts={})
-			#WIP (This will break)
-			column =       opts[:column]
-			db_table =     opts[:db_table]
-			display_text = opts[:display_text] 
-			show_asc =    (opts[:show_asc] || true)
-			show_desc =   (opts[:show_desc] || true)
-
+		def initialize(column, opts={})
 			@column = column
-			@display_text = display_text
-			@show_asc = show_asc
-			@show_desc = show_desc
+			@db_table =     opts[:db_table]
+			@display_text = opts[:display_text] 
+			@show_asc =    (opts[:show_asc].nil? ? true : opts[:show_asc])
+			@show_desc =   (opts[:show_desc].nil? ? true : opts[:show_desc])
 		end
 		def name
 			column.to_s

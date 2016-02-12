@@ -25,8 +25,9 @@ describe Comment do
 			end
 			
 		  it "sorts by article.headline as defined in the model" do
-		  	# binding.pry
-		  	pending
+		  	binding.pry
+		  	@comments = Comment.sql_sort(@sort_by, @sort_dir)
+		  	
 		  	#just a starting point...probably need to get more granual
 		  end
 		end
