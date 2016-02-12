@@ -62,7 +62,8 @@ module SqlSearchableSortable
 			cols.each do |col|
 				if col.is_a? Hash
 					h = col.fetch(col.keys.first)
-					self << SortColumn.new(col.keys.first, h[:db_table], h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true))
+					# opts = {column: col.keys.first, h[:db_table], h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true)}
+					self << SortColumn.new({column: col.keys.first}.merge(h))
 				else
 					self << SortColumn.new(col)
 				end
@@ -89,8 +90,15 @@ module SqlSearchableSortable
 	end
 	
 	class SortColumn
-		attr_reader :column, :show_asc, :show_desc ,:display_text
-		def initialize(column, display_text=nil, show_asc=true, show_desc=true)
+		attr_reader :column, :db_table, :show_asc, :show_desc ,:display_text
+		def initialize(opts={})
+			#WIP (This will break)
+			column =       opts[:column]
+			db_table =     opts[:db_table]
+			display_text = opts[:display_text] 
+			show_asc =    (opts[:show_asc] || true)
+			show_desc =   (opts[:show_desc] || true)
+
 			@column = column
 			@display_text = display_text
 			@show_asc = show_asc

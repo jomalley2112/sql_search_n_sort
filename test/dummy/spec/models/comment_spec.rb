@@ -25,7 +25,8 @@ describe Comment do
 			end
 			
 		  it "sorts by article.headline as defined in the model" do
-		  	binding.pry
+		  	# binding.pry
+		  	pending
 		  	#just a starting point...probably need to get more granual
 		  end
 		end
