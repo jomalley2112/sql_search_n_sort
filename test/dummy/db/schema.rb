@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20160121020730) do
 
+
   create_table "articles", force: true do |t|
     t.string   "headline"
     t.string   "by_line"
@@ -29,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160121020730) do
     t.datetime "updated_at"
     t.integer  "article_id"
   end
+
 
   create_table "members", force: true do |t|
     t.string   "first_name"
@@ -67,8 +69,8 @@ ActiveRecord::Schema.define(version: 20160121020730) do
     t.time     "tm"
     t.datetime "dtm"
     t.boolean  "bool"
-    t.float    "flt"
-    t.decimal  "dec"
+    t.float    "flt",        limit: 24
+    t.decimal  "dec",                   precision: 10, scale: 0
     t.binary   "bn"
     t.datetime "ts"
     t.datetime "created_at"
