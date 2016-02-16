@@ -21,14 +21,11 @@ describe Comment do
 						FactoryGirl.create(:comment, article: article)
 					end  	
 				end
-				
 			end
 			
 		  it "sorts by article.headline as defined in the model" do
-		  	binding.pry
-		  	@comments = Comment.sql_sort(@sort_by, @sort_dir)
-		  	
-		  	#just a starting point...probably need to get more granual
+		  	@comments = Comment.joins(:article).sql_sort("headline", @sort_dir)
+		  	expect(@comments.pluck(:headline)).to eq(@comments.pluck(:headline).sort)
 		  end
 		end
 	end

@@ -20,7 +20,7 @@ module SqlSearchableSortable
 			scope :sql_sort, ->(scope_sort_col=nil, scope_sort_dir=nil) do
 				scope_sort_col ||= default_sort_col #use model's default sort col if no args present
 				scope_sort_dir ||= default_sort_dir || :asc #same for direction
-				order(sort_config.get_order(scope_sort_col, scope_sort_dir, default_sort_col))
+				order(sort_config.get_order(scope_sort_col, scope_sort_dir, default_sort_col, self))
 			end
 		end
 	end
@@ -59,61 +59,5 @@ module SqlSearchableSortable
 		sort_config.select_opts 
 	end
 
-	class ModelSortConfig < Array
-		
-		def initialize(*cols)
-
-			cols.each do |col|
-				if col.is_a? Hash
-					opts_hash = col.fetch(col.keys.first)
-					self << SortColumn.new(col.keys.first, opts_hash)
-				else
-					self << SortColumn.new(col)
-				end
-			end
-		end
-
-		def get_order(sort_by, dir, def_sort_col)
-			# if self.contains_column(sort_by)
-				# {sort_by => dir}
-				Article.arel_table[:headline].send(dir)
-			# else
-			# 	{def_sort_col => dir} if def_sort_col
-			# end
-		end
-	 	
-		def contains_column(col)
-			self.any? { |sc| sc.column == col }
-		end
-
-		def select_opts
-			return self.inject([]) do |m, sort_col|
-				m + sort_col.select_opts
-			end 
-		end
-	end
-	
-	class SortColumn
-		attr_reader :column, :db_table, :show_asc, :show_desc ,:display_text
-		def initialize(column, opts={})
-			@column = column
-			@db_table =     opts[:db_table]
-			@display_text = opts[:display_text] 
-			@show_asc =    (opts[:show_asc].nil? ? true : opts[:show_asc])
-			@show_desc =   (opts[:show_desc].nil? ? true : opts[:show_desc])
-		end
-		def name
-			column.to_s
-		end
-		def human_name
-			name.humanize
-		end
-		def select_opts
-			arr = []
-			arr << ["#{display_text || human_name}",        "#{name}"]      if show_asc
-			arr << ["#{display_text || human_name} [desc]", "#{name} desc"] if show_desc
-			return arr
-		end
-	end
 
 end

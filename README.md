@@ -30,7 +30,7 @@ Also, at this point it appears that adding indexes will not improve performance 
 		extend SqlSearchableSortable
 		sql_searchable :first_name, :last_name
 		sql_sortable   :first_name, :last_name, :email, 
-		                :updated_at => {:show_asc => false, :display_text => "Date last changed"}
+		                updated_at: {show_asc: false, display_text: "Date last changed", joined_table: :article}
 		
 		default_sql_sort :last_name #optional
 		
@@ -72,7 +72,7 @@ end
 
 ##### Specifics #####
 
-1. Add the following lines to any model (see Example Model above):
+1. Add the following lines to any ActiveRecord model (see Example Model above):
 	- `extend SqlSearchableSortable`
 	- for search:
 		- `sql_searchable :col1, :col2, :col3 #...`
@@ -82,6 +82,7 @@ end
 				- `show_asc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in ascending order?
 				- `show_desc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in descending order? 
 				- `display_text: "Column display text"` - The text displayed for this column in the Sort by dropdown.
+				- `joined_table: :article` - When sorting on this column it will use the column from a joined table with the name specified. Note: You must define the join in your call to sql_sort like the following in your controller `Comment.joins(:article).sql_sort(@sort_by, @sort_dir)`
 		- and optionally you can specify the default ordering column in the model file with or without the :desc option (specifying descending default sort direction):
 			-	`default_sql_sort :sortable_col1 [, :desc]`
 				- NOTE: specifying order in the model's default_scope will cause sql_sort functionality to break
