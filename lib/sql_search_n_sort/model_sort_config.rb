@@ -1,7 +1,6 @@
 class ModelSortConfig < Array
 		
 	def initialize(*cols)
-
 		cols.each do |col|
 			if col.is_a? Hash
 				opts_hash = col.fetch(col.keys.first)
@@ -9,7 +8,9 @@ class ModelSortConfig < Array
 			else
 				self << SortColumn.new(col)
 			end
+
 		end
+		
 	end
 
 	def get_order(sort_by, dir, def_sort_col, base_class)

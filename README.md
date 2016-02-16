@@ -75,9 +75,9 @@ end
 1. Add the following lines to any ActiveRecord model (see Example Model above):
 	- `extend SqlSearchableSortable`
 	- for search:
-		- `sql_searchable :col1, :col2, :col3 #...`
+		- `sql_searchable :col1, :col2, :col3, #...`
 	- for sort:
-		- `sql_sortable :col1, :col2, :col3 => { show_desc: false, display_text: "Column Three"}, #...`
+		- `sql_sortable :col1, :col2, {:col3 => { show_desc: false, display_text: "Column Three"}}`
 			- each column parameter passed in can add an optional hash to specify a few options: 
 				- `show_asc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in ascending order?
 				- `show_desc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in descending order? 
