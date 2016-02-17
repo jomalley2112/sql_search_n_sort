@@ -30,7 +30,7 @@ Also, at this point it appears that adding indexes will not improve performance 
 		extend SqlSearchableSortable
 		sql_searchable :first_name, :last_name
 		sql_sortable   :first_name, :last_name, :email, 
-		                :updated_at => {:show_asc => false, :display_text => "Date last changed"}
+		                updated_at: {show_asc: false, display_text: "Date last changed", joined_table: :article}
 		
 		default_sql_sort :last_name #optional
 		
@@ -72,16 +72,17 @@ end
 
 ##### Specifics #####
 
-1. Add the following lines to any model (see Example Model above):
+1. Add the following lines to any ActiveRecord model (see Example Model above):
 	- `extend SqlSearchableSortable`
 	- for search:
-		- `sql_searchable :col1, :col2, :col3 #...`
+		- `sql_searchable :col1, :col2, :col3, #...`
 	- for sort:
-		- `sql_sortable :col1, :col2, :col3 => { show_desc: false, display_text: "Column Three"}, #...`
+		- `sql_sortable :col1, :col2, {:col3 => { show_desc: false, display_text: "Column Three"}}`
 			- each column parameter passed in can add an optional hash to specify a few options: 
 				- `show_asc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in ascending order?
 				- `show_desc: [true|false]` - Should the Sort by dropdown have an option for sorting by this column in descending order? 
 				- `display_text: "Column display text"` - The text displayed for this column in the Sort by dropdown.
+				- `joined_table: :article` - When sorting on this column it will use the column from a joined table with the name specified. Note: You must define the join in your call to sql_sort like the following in your controller `Comment.joins(:article).sql_sort(@sort_by, @sort_dir)`
 		- and optionally you can specify the default ordering column in the model file with or without the :desc option (specifying descending default sort direction):
 			-	`default_sql_sort :sortable_col1 [, :desc]`
 				- NOTE: specifying order in the model's default_scope will cause sql_sort functionality to break
@@ -101,7 +102,6 @@ end
 	- alter the following before\_filter line in application\_controller.rb `before_filter :setup_sql_sort [,...]` to make sure that your controller action does not cause it to execute. (You can either comment out the line or employ the :except or :only parameters.)
 	- If you are using the sort functionality... in the first line of your controller action call `setup_sql_sort(Fully::Namespaced::ModelName)` 
 5. If there are certain application parameters that you don't want passed along when performing a search or sort you can add them to the arrays defined in `config.suppress_params` in 'config/initializers/sql_search_n_sort'. This was implemented to avoid issues like using pagination gem kaminari and being on a page other than the first and then having a search return less results causing the page to be empty. (search: ["page"])
-6. Ad CSS to your liking
 
 ---
 
