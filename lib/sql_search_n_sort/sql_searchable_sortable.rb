@@ -1,5 +1,8 @@
 module SqlSearchableSortable
 
+	#NOTES:
+	#Comment.joins(:article).order(Article.arel_table[:headline]).to_sql=> "SELECT `comments`.* FROM `comments` INNER JOIN `articles` ON `articles`.`id` = `comments`.`article_id`  ORDER BY `articles`.`headline`"
+
   def self.extended(base)
   	base.class_eval do
   		attr_accessor :ssns_sortable
@@ -17,7 +20,7 @@ module SqlSearchableSortable
 			scope :sql_sort, ->(scope_sort_col=nil, scope_sort_dir=nil) do
 				scope_sort_col ||= default_sort_col #use model's default sort col if no args present
 				scope_sort_dir ||= default_sort_dir || :asc #same for direction
-				order(sort_config.get_order(scope_sort_col, scope_sort_dir, default_sort_col))
+				order(sort_config.get_order(scope_sort_col, scope_sort_dir, default_sort_col, self))
 			end
 		end
 	end
@@ -56,58 +59,5 @@ module SqlSearchableSortable
 		sort_config.select_opts 
 	end
 
-	class ModelSortConfig < Array
-		
-		def initialize(*cols)
-			cols.each do |col|
-				if col.is_a? Hash
-					h = col.fetch(col.keys.first)
-					self << SortColumn.new(col.keys.first, h[:display_text], h.fetch(:show_asc, true), h.fetch(:show_desc, true))
-				else
-					self << SortColumn.new(col)
-				end
-			end
-		end
-
-		def get_order(sort_by, dir, def_sort_col)
-			if self.contains_column(sort_by)
-				{sort_by => dir}
-			else
-				{def_sort_col => dir} if def_sort_col
-			end
-		end
-	 	
-		def contains_column(col)
-			self.any? { |sc| sc.column == col }
-		end
-
-		def select_opts
-			return self.inject([]) do |m, sort_col|
-				m + sort_col.select_opts
-			end 
-		end
-	end
-	
-	class SortColumn
-		attr_reader :column, :show_asc, :show_desc ,:display_text
-		def initialize(column, display_text=nil, show_asc=true, show_desc=true)
-			@column = column
-			@display_text = display_text
-			@show_asc = show_asc
-			@show_desc = show_desc
-		end
-		def name
-			column.to_s
-		end
-		def human_name
-			name.humanize
-		end
-		def select_opts
-			arr = []
-			arr << ["#{display_text || human_name}",        "#{name}"]      if show_asc
-			arr << ["#{display_text || human_name} [desc]", "#{name} desc"] if show_desc
-			return arr
-		end
-	end
 
 end
