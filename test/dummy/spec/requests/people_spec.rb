@@ -120,7 +120,7 @@ describe "People" do
       		sleep 1
       		p2 = FactoryGirl.create(:person, :email => "p2@domain.com")
       		visit sort_people_path
-          expect(select("Date last changed [desc]", :from => "sort_by")).to eq("ok")
+          expect(page).to have_selector("select#sort_by > option", text: "Date last changed [desc]")
       end
     end
   
