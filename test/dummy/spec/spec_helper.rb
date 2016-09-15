@@ -7,6 +7,7 @@ require 'rspec/autorun'
 require 'database_cleaner'
 require 'capybara/rails'
 require 'capybara/rspec'
+require "selenium-webdriver"
 require 'factory_girl_rails'
 require 'pry'
 
@@ -54,6 +55,11 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FactoryGirl::Syntax::Methods
   config.include Rails.application.routes.url_helpers
+end
+
+caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"args" => [ "--disable-extensions" ]})
+Capybara.register_driver :selenium do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome, desired_capabilities: caps)
 end
 
 def same_order?(model, field, arr, asc=true)
