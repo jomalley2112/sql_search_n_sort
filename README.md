@@ -3,10 +3,9 @@
 [![Gem Version](https://badge.fury.io/rb/sql_search_n_sort.svg)](http://badge.fury.io/rb/sql_search_n_sort)
 
 #### Description ####
-Provides simple SQL-based* search and sort functionality (that work together or separately) for the index or any other page that lists out ActiveRecord models. Being SQL-driven it gives you search capability without making you run a separate full-text server like Solr. 
+Provides simple SQL-based \*search and sort functionality (that work together or separately) for the index or any other page that lists out ActiveRecord models. Being SQL-driven it gives you search capability without making you run a separate full-text server like Solr. 
 
-\* *Works on string and text fields. Trying to specify columns of any other type will raise an UnsearchableType exception. 
-Also, at this point it appears that adding indexes will not improve performance due to the use of a leading wildcard in conjunction with LIKE comparisons. Tested on SQLLite, MySQL and PostrgreSQL, but should work with others as well.*
+\* *Search works on string and text fields. Trying to specify columns of any other type will raise an UnsearchableType exception.*
 
 *Note: [ControllerScaffolding](https://github.com/jomalley2112/controller_scaffolding) includes SqlSearchNSort functionality and generates all the necessary code to get it up and running.*
 
@@ -120,17 +119,17 @@ end
 
 #### Gem dependencies ####
 - Dependencies:
-	- "rails", "~> 4.0"
-	- "haml-rails"
+	- rails
+	- haml-rails
 
 - Development Environment Dependencies:
-	- "sqlite3"
-	- "rspec-rails"
-	- "capybara"
-	- "selenium-webdriver"
-	- "factory_girl_rails"
-	- "database_cleaner"
-	- "faker"
+	- sqlite3
+	- rspec-rails
+	- capybara
+	- selenium-webdriver
+	- factory_girl_rails
+	- database_cleaner
+	- faker
 
 #### TODO ####
 - Allow for case-sensitive and whole word searches
