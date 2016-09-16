@@ -32,7 +32,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     
     assert_file "app/controllers/application_controller.rb" do |app_ctrlr|
       assert_no_match(/include SqlSortSetup/, app_ctrlr)
-      assert_no_match(/before_filter :setup_sql_sort, :only => \[:index/, app_ctrlr)
+      assert_no_match(/before_action :setup_sql_sort, :only => \[:index/, app_ctrlr)
     end
 
     assert_file "app/assets/javascripts/application.js" do |app_js|
@@ -43,7 +43,7 @@ class InstallGeneratorTest < Rails::Generators::TestCase
     
     assert_file "app/controllers/application_controller.rb" do |app_ctrlr|
       assert_match(/include SqlSortSetup/, app_ctrlr)
-      assert_match(/before_filter :setup_sql_sort, :only => \[:index/, app_ctrlr)
+      assert_match(/before_action :setup_sql_sort, :only => \[:index/, app_ctrlr)
     end
 
     #This test will fail if there is an application.js.coffee instead of an application.js

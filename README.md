@@ -94,11 +94,11 @@ end
 	`@people = Person.sql_search(params[:search_for])`
 	- For just Sort:
 	`@people = Person.sql_sort(@sort_by, @sort_dir)`
-		- In app/controllers/application_controller.rb there will be a line: `before_filter :setup_sql_sort, :only => [:index, :sort_only_index]`. You will need to add any actions named anything other than :index to this array and most likely remove :sort_only_index e.g. `before_filter :setup_sql_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_filter :setup_sql_sort`, which could cause a minimal performance loss depending on how many actions are defined in your controller. If you are trying to sort on columns that don;t exist in the primary table (when joining) pass in the model explicitly to the setup_sql_sort method as such: `before_filter(:only => [:index]) { |mc| mc.setup_sql_sort(Person) }`.
+		- In app/controllers/application_controller.rb there will be a line: `before_action :setup_sql_sort, :only => [:index, :sort_only_index]`. You will need to add any actions named anything other than :index to this array and most likely remove :sort_only_index e.g. `before_action :setup_sql_sort, :only => [:index, :other_action_using_sort]`. The other option is to completely remove the `:only` option altogether `before_action :setup_sql_sort`, which could cause a minimal performance loss depending on how many actions are defined in your controller. If you are trying to sort on columns that don;t exist in the primary table (when joining) pass in the model explicitly to the setup_sql_sort method as such: `before_action(:only => [:index]) { |mc| mc.setup_sql_sort(Person) }`.
 	- For both Search & Sort just chain them:
   `@people = Person.sql_search(params[:search_for]).sql_sort(@sort_by, @sort_dir)`
 4. If your resource is scoped/namespaced you will want to: 
-	- alter the following before\_filter line in application\_controller.rb `before_filter :setup_sql_sort [,...]` to make sure that your controller action does not cause it to execute. (You can either comment out the line or employ the :except or :only parameters.)
+	- alter the following before\_action line in application\_controller.rb `before_action :setup_sql_sort [,...]` to make sure that your controller action does not cause it to execute. (You can either comment out the line or employ the :except or :only parameters.)
 	- If you are using the sort functionality... in the first line of your controller action call `setup_sql_sort(Fully::Namespaced::ModelName)` 
 5. If there are certain application parameters that you don't want passed along when performing a search or sort you can add them to the arrays defined in `config.suppress_params` in 'config/initializers/sql_search_n_sort'. This was implemented to avoid issues like using pagination gem kaminari and being on a page other than the first and then having a search return less results causing the page to be empty. (search: ["page"])
 
@@ -110,7 +110,7 @@ end
 	- `app/views/application/_search_form.html.haml`
 	- `app/assets/javascripts/sql_search_n_sort.js`
 - Other changes made by the generator
-	- Adds an include and a before_filter call to `app/controllers/application_controller.rb`
+	- Adds an include and a before_action call to `app/controllers/application_controller.rb`
 	- Adds `//= require jquery` to `app/assets/javascripts/application.js` if not already there.
 
 #### Testing ####
