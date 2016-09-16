@@ -3,7 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'equivalent-xml'
-require 'rspec/autorun'
+# require 'rspec/autorun'
 require 'database_cleaner'
 require 'capybara/rails'
 require 'capybara/rspec'
@@ -40,6 +40,11 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
     FactoryGirl.reload
+  end
+
+  config.expect_with :rspec do |expectations|
+    # expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+    expectations.syntax = [:should, :expect]
   end
 
   # If true, the base class of anonymous controllers will be inferred
