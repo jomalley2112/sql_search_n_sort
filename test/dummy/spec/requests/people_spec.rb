@@ -158,6 +158,34 @@ describe "People" do
 				sleep 0.5
       	all(:xpath, "//table/tbody/tr").count.should eq john_2_count
 			end
+
+      describe 'sticky sorting', :js => true do
+        context 'when the user has previously perfomed a sort on these object types' do
+          before do
+            visit people_path
+            select("First name", :from => "sort_by")
+            sleep 0.5
+          end
+          let!(:first_names) { page.all(:xpath, "//table/tbody/tr/td[1]") }
+          it 'repeats the most recently performed search' do
+            visit people_path #reload page
+            expect(find("select#sort_by").value).to eq "first_name"
+            john_2_first_names = all(:xpath, "//table/tbody/tr/td[1]")
+            expect(john_2_first_names.map(&:text))
+              .to eq(john_2_first_names.map(&:text).sort)
+          end
+          context 'when they visit another sortable page and come back' do
+            it 'repeats the most recently performed search' do
+              visit articles_path
+              visit people_path
+              expect(find("select#sort_by").value).to eq "first_name"
+              john_2_first_names = all(:xpath, "//table/tbody/tr/td[1]")
+              expect(john_2_first_names.map(&:text))
+                .to eq(john_2_first_names.map(&:text).sort)
+            end
+          end
+        end
+      end
     end
 
     describe "existing params (people)" do
