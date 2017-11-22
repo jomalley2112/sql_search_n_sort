@@ -33,7 +33,7 @@ describe "People" do
 					FactoryGirl.create(:person, first_name: "Fred", last_name: "Bradley")
 					FactoryGirl.create(:person, first_name: "Brad", last_name: "Johnson")
 					FactoryGirl.create(:person, first_name: "John", last_name: "Williams")
-					FactoryGirl.create(:person, first_name: "Will", last_name: "Farley")
+					FactoryGirl.create(:person, first_name: "Will", last_name: "F_arley", email: "j_johns@somemail.com")
 					FactoryGirl.create(:person, first_name: "Joseph", email: "jo@brads.net")
 				end
       	
@@ -68,6 +68,15 @@ describe "People" do
     			first("input#search_for").value.should eq ""
     			first("tbody").all("tr").count.should eq 5
       	end
+        describe 'special sql characters' do
+          it 'treats them as literals and not special' do
+            visit search_people_path
+            first("tbody").all("tr").count.should eq 5
+            fill_in("search_for", :with => "f_")
+            click_button("submit-search")
+            first("tbody").all("tr").count.should eq 1 #would also match "Fred" if acting as special character
+          end
+        end
 	      
       end
 
@@ -111,7 +120,8 @@ describe "People" do
       it "defaults to valid ascending search if invalid sort direction, but valid 
       		sort column value is passed in", :js => false do
       	visit sort_people_path(:sort_by => "email invalid_direction")
-      	find("select#sort_by").value.should eq "email"
+        emails = all(:xpath, "//table/tbody/tr/td[3]")
+        emails.map(&:text).should == emails.map(&:text).sort
       end
 
       it "allows sorting by column that is specifying extended options 
@@ -167,7 +177,7 @@ describe "People" do
             sleep 0.5
           end
           let!(:first_names) { page.all(:xpath, "//table/tbody/tr/td[1]") }
-          it 'repeats the most recently performed search' do
+          it 'repeats the most recently performed sort' do
             visit people_path #reload page
             expect(find("select#sort_by").value).to eq "first_name"
             john_2_first_names = all(:xpath, "//table/tbody/tr/td[1]")
@@ -175,7 +185,7 @@ describe "People" do
               .to eq(john_2_first_names.map(&:text).sort)
           end
           context 'when they visit another sortable page and come back' do
-            it 'repeats the most recently performed search' do
+            it 'repeats the most recently performed sort' do
               visit articles_path
               visit people_path
               expect(find("select#sort_by").value).to eq "first_name"
@@ -183,9 +193,55 @@ describe "People" do
               expect(john_2_first_names.map(&:text))
                 .to eq(john_2_first_names.map(&:text).sort)
             end
+
+          end
+          context 'when they visit another sortable page, sort by another column and come back' do
+            it 'repeats the most recently performed sort' do
+              visit articles_path
+              select("Headline", :from => "sort_by")
+              visit people_path
+              expect(find("select#sort_by").value).to eq "first_name"
+              john_2_first_names = all(:xpath, "//table/tbody/tr/td[1]")
+              expect(john_2_first_names.map(&:text))
+                .to eq(john_2_first_names.map(&:text).sort)
+            end
+          end
+
+        end
+      
+        context 'when the user has previously perfomed a descending sort on these object types' do
+          before do
+            visit people_path
+            select("First name [desc]", :from => "sort_by")
+            sleep 0.5
+          end
+          context "when sorting in descending order" do
+            it 'selects the correct option from the drop down' do
+              visit people_path #reload page
+              expect(find("select#sort_by").value).to eq "first_name desc"
+              john_2_first_names = all(:xpath, "//table/tbody/tr/td[1]")
+              expect(john_2_first_names.map(&:text))
+                .to eq(john_2_first_names.map(&:text).sort.reverse)
+            end      
+          end
+        end
+
+        context 'when the user has previously perfomed a sort on these object types' do
+          context "when the sort column's display text is different than the column name" do
+            before do
+              visit people_path
+              select("Date last changed [desc]", :from => "sort_by")
+              sleep 0.5
+            end
+            it 'selects the correct option from the drop down' do
+              visit people_path #reload page
+              expect(find("select#sort_by").value).to eq "updated_at desc"
+            end      
           end
         end
       end
+
+
     end
 
     describe "existing params (people)" do

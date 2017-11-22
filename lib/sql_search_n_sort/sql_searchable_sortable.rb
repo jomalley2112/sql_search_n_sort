@@ -27,7 +27,7 @@ module SqlSearchableSortable
 
 	def search_clause(search_for)
 		(sql_search_cols || []).inject(nil) do |query, col|
-			search_check = arel_table[col].matches("%#{search_for}%")
+			search_check = arel_table[col].matches("%#{sanitize_sql_like(search_for)}%")
 			query.nil? ? search_check : query.or(search_check)
 		end
 	end

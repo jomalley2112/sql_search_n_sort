@@ -111,7 +111,8 @@ describe "Vehicles spec" do
       it "defaults to valid ascending search if invalid sort direction, but valid 
       		sort column value is passed in", :js => false do
       	visit sort_vehicles_path(:sort_by => "color invalid_direction")
-      	find("select#sort_by").value.should eq "color"
+        colors = all(:xpath, "//table/tbody/tr/td[5]")
+        colors.map(&:text).should == colors.map(&:text).sort.reverse
       end
 
     end
