@@ -12,26 +12,24 @@ Gem::Specification.new do |s|
   s.description = "A gem that allows for simple SQL-based search and sort functionality"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir["lib/**/*", "MIT-LICENSE", "Rakefile"]
+  # s.test_files = Dir["test/**/*"]
 
-  s.add_dependency 'nokogiri' #, '=1.6.3.1'
-  s.add_dependency "rails", "~> 5.0"
-  s.add_dependency 'mysql2' #, '~> 0.3.18'
-  s.add_dependency "haml-rails"
-  s.add_dependency 'jquery-rails'
+  s.add_dependency 'nokogiri' #was 1.8.1
+  s.add_dependency "rails", "~> 5.1.4" #was 5.1.4
+  s.add_dependency "haml-rails" #was 5.0.4
+  s.add_dependency 'jquery-rails' #was 4.3.1
 
-  # s.add_development_dependency "sqlite3"
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "factory_girl_rails"
-  s.add_development_dependency "pry"
-  s.add_development_dependency "database_cleaner"
-  s.add_development_dependency "capybara"
-  s.add_development_dependency "selenium-webdriver"
-  s.add_development_dependency "chromedriver-helper"
-  s.add_development_dependency "faker"
-  s.add_development_dependency "equivalent-xml"
-  s.add_development_dependency "ffi"
+  s.add_development_dependency "rspec-rails" #was 3.7.2
+  s.add_development_dependency "factory_girl_rails" #was 4.9.0
+  s.add_development_dependency "pry" #was 0.11.3
+  s.add_development_dependency "database_cleaner" #was 1.6.2
+  s.add_development_dependency "capybara" #was 2.16.1
+  s.add_development_dependency "selenium-webdriver" #was 3.7.0
+  s.add_development_dependency "chromedriver-helper" #was 1.1.0
+  s.add_development_dependency "faker" #was 1.8.4
+  s.add_development_dependency "equivalent-xml" #was 0.6.0
+  s.add_development_dependency "ffi" #was 1.9.18
   
   
 end

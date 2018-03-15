@@ -62,10 +62,11 @@ RSpec.configure do |config|
   config.include Rails.application.routes.url_helpers
 end
 
-caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"args" => [ "--disable-extensions" ]})
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome, desired_capabilities: caps)
-end
+#JOM Commented out to test on windows
+# caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"args" => [ "--disable-extensions" ]})
+# Capybara.register_driver :selenium do |app|
+#   Capybara::Selenium::Driver.new(app, :browser => :chrome, desired_capabilities: caps)
+# end
 
 def same_order?(model, field, arr, asc=true)
   if asc
