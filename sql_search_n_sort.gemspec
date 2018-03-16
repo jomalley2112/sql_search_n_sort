@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "database_cleaner", '~> 1.6.2' #was 1.6.2
   s.add_development_dependency "capybara", '~> 2.18.0' #was 2.16.1
   s.add_development_dependency "selenium-webdriver", '~> 3.11.0' #was 3.7.0
-  s.add_development_dependency "chromedriver-helper", '~> 1.2.0' #was 1.1.0
   s.add_development_dependency "faker", '~> 1.8.4' #was 1.8.4
   s.add_development_dependency "equivalent-xml", '~> 0.6.0' #was 0.6.0
   s.add_development_dependency "ffi", '~> 1.9.18' #was 1.9.18
