@@ -5,6 +5,8 @@ source "http://rubygems.org"
 # development dependencies will be added by default to the :development group.
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
 gem 'mysql2'
+gem "faker", '~> 1.8.4' #was 1.8.4
+gem "pry", '~> 0.11.3' #was 0.11.3
 gemspec
 
 # Declare any dependencies that are still in development here instead of in
