@@ -123,13 +123,11 @@ end
 	- haml-rails
 
 - Development Environment Dependencies:
-	- sqlite3
 	- rspec-rails
 	- capybara
 	- selenium-webdriver
 	- factory_girl_rails
 	- database_cleaner
-	- faker
 
 #### TODO ####
 - Allow for case-sensitive and whole word searches

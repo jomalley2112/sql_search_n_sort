@@ -19,14 +19,13 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", '~> 5.1.4' #was 5.1.4
   s.add_dependency "haml-rails", '~> 1.0.0'
   s.add_dependency "jquery-rails", '~> 4.3.1' #was 4.3.1
+  s.add_dependency 'loofah', '~> 2.2.1'
 
   s.add_development_dependency "rspec-rails", '~> 3.7.2' #was 3.7.2
   s.add_development_dependency "factory_girl_rails", '~> 4.9.0' #was 4.9.0
-  s.add_development_dependency "pry", '~> 0.11.3' #was 0.11.3
   s.add_development_dependency "database_cleaner", '~> 1.6.2' #was 1.6.2
   s.add_development_dependency "capybara", '~> 2.18.0' #was 2.16.1
   s.add_development_dependency "selenium-webdriver", '~> 3.11.0' #was 3.7.0
-  s.add_development_dependency "faker", '~> 1.8.4' #was 1.8.4
   s.add_development_dependency "equivalent-xml", '~> 0.6.0' #was 0.6.0
   s.add_development_dependency "ffi", '~> 1.9.18' #was 1.9.18
   
