@@ -1,11 +1,11 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :person do
     sequence(:first_name) { |n| "John_#{n}" }
     sequence(:last_name) { |n| "Doe_#{n}" }
     sequence(:email) { |n| "johndoesemail_#{n}@domain.com"}
     age {Random.rand(15..99)}
-    bio "Some text here"
+    bio {"Some text here"}
     sequence(:nickname) { |n| "nick_#{n}" }
   end
 
@@ -16,11 +16,11 @@ FactoryGirl.define do
   end
 
   factory :vehicle do
-  	year 2010
-  	manufacturer "Chevrolet"
-  	model "Silverado"
-  	engine "5.0 liter"
-  	color "Pewter"
+  	year {2010}
+  	manufacturer {"Chevrolet"}
+  	model {"Silverado"}
+  	engine {"5.0 liter"}
+  	color {"Pewter"}
   end
 
   factory :product do

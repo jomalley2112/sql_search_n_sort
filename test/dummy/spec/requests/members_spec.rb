@@ -16,7 +16,7 @@ describe "Members" do
     describe "sort only" do
     	before(:each) do
     		(1..50).each do 
-					FactoryGirl.create(:member, first_name: "John_#{Random.rand(1..99)}", 
+					create(:member, first_name: "John_#{Random.rand(1..99)}", 
 						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
 				end  
     	end
@@ -43,11 +43,11 @@ describe "Members" do
 
     describe "perform searches", :js => true do
       before(:each) do
-        FactoryGirl.create(:member, first_name: "Fred", last_name: "Bradley")
-        FactoryGirl.create(:member, first_name: "Brad", last_name: "Johnson")
-        FactoryGirl.create(:member, first_name: "John", last_name: "Williams")
-        FactoryGirl.create(:member, first_name: "Will", last_name: "Farley")
-        FactoryGirl.create(:member, first_name: "Joseph", email: "jo@brads.net")
+        create(:member, first_name: "Fred", last_name: "Bradley")
+        create(:member, first_name: "Brad", last_name: "Johnson")
+        create(:member, first_name: "John", last_name: "Williams")
+        create(:member, first_name: "Will", last_name: "Farley")
+        create(:member, first_name: "Joseph", email: "jo@brads.net")
       end
       
       it "returns only rows that have first or last name matching case-insensitive 'brad'" do

@@ -23,7 +23,7 @@ module SqlSearchableSortable
 				order(sort_config.get_order(scope_sort_col, scope_sort_dir, default_sort_col, self))
 			end
 		end
-	end
+  end
 
 	def search_clause(search_for)
 		(sql_search_cols || []).inject(nil) do |query, col|

@@ -14,7 +14,7 @@ describe "Products" do
   describe "GET /products" do
     before(:each) do
 			(1..50).each do
-		  	FactoryGirl.create(:product)
+		  	create(:product)
 			end
 		end
 		it "sorts by product manufacturer in descending order by default", :js => false do

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Product do
   before(:each) do
 		(1..50).each do
-	  	FactoryGirl.create(:product)
+	  	create(:product)
 		end
 	end
 

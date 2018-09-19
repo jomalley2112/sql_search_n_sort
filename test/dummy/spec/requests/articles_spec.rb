@@ -15,7 +15,7 @@ describe "Articles" do
   describe "GET /articles" do
   	before(:each) do
 			(1..50).each do
-		  	FactoryGirl.create(:article)
+		  	create(:article)
 			end
 		end
     it "sorts by default column in ascending order when
