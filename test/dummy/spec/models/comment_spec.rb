@@ -18,9 +18,9 @@ describe Comment do
 			Article.record_timestamps = false
 			Comment.record_timestamps = false
 			(1..5).each do
-				article = FactoryGirl.create(:article, headline: "Some Article Headline #{rand(1..9)}", updated_at: Time.now + (rand(1..9)).minutes, created_at: Time.now - (rand(1..9)).minutes)
+				article = create(:article, headline: "Some Article Headline #{rand(1..9)}", updated_at: Time.now + (rand(1..9)).minutes, created_at: Time.now - (rand(1..9)).minutes)
 				(1..3).each do
-					FactoryGirl.create(:comment, article: article, updated_at: Time.now + (rand(1..9)).minutes, created_at: Time.now - (rand(1..9)).minutes)
+					create(:comment, article: article, updated_at: Time.now + (rand(1..9)).minutes, created_at: Time.now - (rand(1..9)).minutes)
 				end  	
 			end
 			expect(Comment.count).to be > 0 #non-trivial for sorting

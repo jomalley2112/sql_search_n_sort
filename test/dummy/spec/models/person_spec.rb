@@ -16,7 +16,7 @@ describe Person do
 	describe "scopes" do
 		
 		describe "search" do
-			before {(1..50).each { FactoryGirl.create(:person) }}
+			before {(1..50).each { create(:person) }}
 			describe "returns only the records that match the search text in the fields specified" do
 				describe "string/varchar fields" do
 					it "returns records with a first_name that matches 'John'" do
@@ -71,7 +71,7 @@ describe Person do
 			before do
 				@people = []
 				(1..50).each do 
-					@people << FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
+					@people << create(:person, first_name: "John_#{Random.rand(1..99)}", 
 											last_name: "Doe_#{Random.rand(1..99)}")
 				end
 			end
@@ -120,7 +120,7 @@ describe Person do
 			before do
 				@people = []
 				(1..50).each do 
-					@people << FactoryGirl.create(:person, 
+					@people << create(:person, 
 											last_name: "Doe_#{Random.rand(1..99)}")
 				end
 			end

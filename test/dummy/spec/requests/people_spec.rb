@@ -10,10 +10,7 @@ describe "People" do
   end
 
   describe "GET /people" do
-  	# before(:each) do
-  	#   (1..25).each { FactoryGirl.create(:person) }
-  	# end
-    describe "search only", :js => false do
+  	describe "search only", :js => false do
       it "displays a search box and a find and clear button" do
       	visit search_people_path
       	page.should have_selector("input#search_for")
@@ -30,11 +27,11 @@ describe "People" do
 
       describe "perform searches", :js => true do
       	before(:each) do
-					FactoryGirl.create(:person, first_name: "Fred", last_name: "Bradley")
-					FactoryGirl.create(:person, first_name: "Brad", last_name: "Johnson")
-					FactoryGirl.create(:person, first_name: "John", last_name: "Williams")
-					FactoryGirl.create(:person, first_name: "Will", last_name: "F_arley", email: "j_johns@somemail.com")
-					FactoryGirl.create(:person, first_name: "Joseph", email: "jo@brads.net")
+					create(:person, first_name: "Fred", last_name: "Bradley")
+					create(:person, first_name: "Brad", last_name: "Johnson")
+					create(:person, first_name: "John", last_name: "Williams")
+					create(:person, first_name: "Will", last_name: "F_arley", email: "j_johns@somemail.com")
+					create(:person, first_name: "Joseph", email: "jo@brads.net")
 				end
       	
       	it "returns only rows that have first or last name matching case-insensitive 'brad'" do
@@ -85,7 +82,7 @@ describe "People" do
     describe "sort only" do
     	before(:each) do
     		(1..50).each do 
-					FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
+					create(:person, first_name: "John_#{Random.rand(1..99)}", 
 						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
 				end  
     	end
@@ -126,9 +123,9 @@ describe "People" do
 
       it "allows sorting by column that is specifying extended options 
       		hash to sql_searchable in the model", :js => true do
-      		p1 = FactoryGirl.create(:person, :email => "p1@domain.com")
+      		p1 = create(:person, :email => "p1@domain.com")
       		sleep 1
-      		p2 = FactoryGirl.create(:person, :email => "p2@domain.com")
+      		p2 = create(:person, :email => "p2@domain.com")
       		visit sort_people_path
           expect(page).to have_selector("select#sort_by > option", text: "Date last changed [desc]")
       end
@@ -138,7 +135,7 @@ describe "People" do
     describe "both search and sort" do
     	before(:each) do
     		(1..50).each do 
-					FactoryGirl.create(:person, first_name: "John_#{Random.rand(1..99)}", 
+					create(:person, first_name: "John_#{Random.rand(1..99)}", 
 						last_name: "Doe_#{Random.rand(1..99)}", email: "johndoesemail_#{Random.rand(1..99)}@domain.com")
 				end  
     	end

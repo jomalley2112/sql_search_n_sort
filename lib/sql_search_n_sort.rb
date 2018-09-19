@@ -11,7 +11,7 @@ module SqlSearchNSort
 	class Engine < Rails::Engine
 	end
 
-	def self.config(&block)
+  def self.config(&block)
     yield Engine.config if block
     Engine.config
   end

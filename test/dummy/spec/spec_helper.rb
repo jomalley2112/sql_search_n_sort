@@ -8,7 +8,7 @@ require 'database_cleaner'
 require 'capybara/rails'
 require 'capybara/rspec'
 require "selenium-webdriver"
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'pry'
 
 
@@ -39,7 +39,7 @@ RSpec.configure do |config|
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
-    FactoryGirl.reload
+    # FactoryBot.reload
   end
 
   config.expect_with :rspec do |expectations|
@@ -58,15 +58,16 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
   config.include Capybara::DSL
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Rails.application.routes.url_helpers
+  config.example_status_persistence_file_path = "rspec-example-persistence"
 end
 
 #JOM Commented out to test on windows
-caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"args" => [ "--disable-extensions" ]})
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome, desired_capabilities: caps)
-end
+# caps = Selenium::WebDriver::Remote::Capabilities.chrome("chromeOptions" => {"args" => [ "--disable-extensions" ]})
+# Capybara.register_driver :selenium do |app|
+#   Capybara::Selenium::Driver.new(app, :browser => :chrome, desired_capabilities: caps)
+# end
 
 def same_order?(model, field, arr, asc=true)
   if asc

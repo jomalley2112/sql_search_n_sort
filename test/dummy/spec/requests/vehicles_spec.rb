@@ -10,10 +10,7 @@ describe "Vehicles spec" do
   after(:all) { run_destroy }
 
   describe "GET /vehicles" do
-  	# before(:each) do
-  	#   (1..25).each { FactoryGirl.create(:vehicle) }
-  	# end
-    describe "search only", :js => false do
+  	describe "search only", :js => false do
       it "displays a search box and a find and clear button" do
       	visit search_vehicles_path
       	page.should have_selector("input#search_for")
@@ -30,11 +27,11 @@ describe "Vehicles spec" do
 
       describe "perform searches", :js => true do
       	before(:each) do
-					FactoryGirl.create(:vehicle, manufacturer: "Fred", model: "Bradley")
-					FactoryGirl.create(:vehicle, manufacturer: "Brad", model: "Johnson")
-					FactoryGirl.create(:vehicle, manufacturer: "John", model: "Williams")
-					FactoryGirl.create(:vehicle, manufacturer: "Will", model: "Farley")
-					FactoryGirl.create(:vehicle, manufacturer: "Joseph", color: "jobrads.net")
+					create(:vehicle, manufacturer: "Fred", model: "Bradley")
+					create(:vehicle, manufacturer: "Brad", model: "Johnson")
+					create(:vehicle, manufacturer: "John", model: "Williams")
+					create(:vehicle, manufacturer: "Will", model: "Farley")
+					create(:vehicle, manufacturer: "Joseph", color: "jobrads.net")
 				end
       	
       	it "returns only rows that have manufacturer or model matching case-insensitive 'brad'" do
@@ -76,7 +73,7 @@ describe "Vehicles spec" do
     describe "sort only" do
     	before(:each) do
     		(1..50).each do 
-					FactoryGirl.create(:vehicle, manufacturer: "John_#{Random.rand(1..99)}", 
+					create(:vehicle, manufacturer: "John_#{Random.rand(1..99)}", 
 						model: "Doe_#{Random.rand(1..99)}", color: "johndoescolor_#{Random.rand(1..99)}")
 				end  
     	end
@@ -121,7 +118,7 @@ describe "Vehicles spec" do
     describe "both search and sort" do
     	before(:each) do
     		(1..50).each do 
-					FactoryGirl.create(:vehicle, manufacturer: "John_#{Random.rand(1..99)}", 
+					create(:vehicle, manufacturer: "John_#{Random.rand(1..99)}", 
 						model: "Doe_#{Random.rand(1..99)}", color: "johndoescolor_#{Random.rand(1..99)}@domain.com")
 				end  
     	end

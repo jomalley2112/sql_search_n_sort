@@ -1,6 +1,6 @@
 module SqlSortSetup
 
-	def setup_sql_sort(model_class=nil)
+  def setup_sql_sort(model_class=nil)
 		#Get model class from class if passed in or by guessing at controller
 		model = model_class || controller_name.classify.constantize 
     if model.is_a? SqlSearchableSortable
@@ -22,7 +22,7 @@ module SqlSortSetup
 			end
 			@sort_dropdown_opts = model.sort_cols_for_dropdown
 			@sort_dir ||= :asc
-		end
+    end
   end
 
   private
