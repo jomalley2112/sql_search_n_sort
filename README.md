@@ -119,8 +119,9 @@ end
 
 #### Gem dependencies ####
 - Dependencies:
-	- rails
+	- activerecord
 	- haml-rails
+	- sprockets-rails
 
 - Development Environment Dependencies:
 	- rspec-rails
