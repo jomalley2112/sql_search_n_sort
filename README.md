@@ -131,5 +131,6 @@ end
 	- database_cleaner
 
 #### TODO ####
+- Decouple from haml-rails gem and remove dependency from gemspec
 - Allow for case-sensitive and whole word searches
 - See if there's anyway to change *like* comparison to be more index friendly
