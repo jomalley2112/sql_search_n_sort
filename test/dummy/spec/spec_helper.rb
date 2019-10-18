@@ -8,7 +8,7 @@ require 'database_cleaner'
 require 'capybara/rails'
 require 'capybara/rspec'
 require "selenium-webdriver"
-require 'factory_bot_rails'
+require 'factory_bot'
 require 'pry'
 
 
