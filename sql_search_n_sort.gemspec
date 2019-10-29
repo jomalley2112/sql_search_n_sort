@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "nokogiri", '~> 1.10.4'
   # s.add_dependency "rails", '~> 5.1.4'
-  s.add_dependency "activerecord", '~> 5.2.3'
+  s.add_dependency "activerecord", '~> 6.0'
   s.add_dependency 'sprockets-rails'
   s.add_dependency "haml-rails", '~> 2.0'
   s.add_dependency "jquery-rails", '~> 4.3.1'
