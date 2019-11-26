@@ -5,7 +5,7 @@ module SqlSearchNSort
 	require "sql_search_n_sort/sql_sort_setup"
 	require 'sql_search_n_sort/railtie' if defined?(Rails)
 	require 'sql_search_n_sort/exceptions'
-	require "haml-rails"
+	require "haml"
 	require "jquery-rails"
 
 	class Engine < Rails::Engine
