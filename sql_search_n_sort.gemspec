@@ -19,9 +19,9 @@ Gem::Specification.new do |s|
   # s.add_dependency "rails", '~> 5.1.4'
   s.add_dependency "activerecord", '~> 6.0'
   s.add_dependency 'sprockets-rails'
-  s.add_dependency "haml"
+  s.add_dependency "haml-rails", '~> 2.0'
   s.add_dependency "jquery-rails", '~> 4.3.1'
-  s.add_dependency 'loofah', '~> 2.3'
+  s.add_dependency 'loofah', '~> 2.2.1'
   s.add_dependency 'sprockets', '~> 3.7.2'
   s.add_dependency 'rubyzip', '~> 1.3.0'
 
@@ -33,5 +33,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "equivalent-xml", '~> 0.6.0'
   s.add_development_dependency "ffi", '~> 1.9.24'
   s.add_development_dependency "rack", ">= 2.0.6"
+  s.add_development_dependency "loofah", "~> 2.2.3"
   
 end
