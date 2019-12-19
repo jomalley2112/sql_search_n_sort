@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sql_search_n_sort (2.1.17)
+    sql_search_n_sort (3.0.0)
       activerecord (~> 6.0)
       haml
       jquery-rails (~> 4.3.1)
