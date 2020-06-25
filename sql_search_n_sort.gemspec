@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   # s.add_dependency "rails", '~> 5.1.4'
   s.add_dependency "activerecord", '~> 6.0'
   s.add_dependency "activesupport", '>= 6.0.3.1'
+  s.add_dependency 'actionpack', '>= 6.0.3.2'
   s.add_dependency 'sprockets-rails'
   s.add_dependency "haml"
   s.add_dependency "jquery-rails", '~> 4.3.1'
