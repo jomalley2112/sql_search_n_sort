@@ -46,7 +46,25 @@ describe "Items" do
 				end
 			end
 		end
+		
+	end
+
+	it 'does not create elements with duplicate ID attributes' do
+		visit_path = items_path(search_for: "previous search string", sort_by: "previous_sort_field")
+		visit visit_path
+		fill_in("search_for", with: "arbitrary search string")
+		click_button "Find"
+		sleep 1
+		html = Nokogiri::HTML(page.body)
+		expect( search_for_field_id(html, 0) )
+		.not_to eq( search_for_field_id(html, 1) )
 	end
 	
+	private
+
+	def search_for_field_id(html, index)
+		#helper method to get the value of the ID attribute of a form input
+		html.search("input[name='search_for']")[index].attr("id")
+	end
 
 end
