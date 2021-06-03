@@ -18,18 +18,23 @@ describe SqlSearchNSortHelper, type: :helper do
 		end
 		
 		it "returns the current request parameters as hidden fields" do
-			expected_html = Nokogiri::HTML("<input id=\"param_1\" name=\"param_1\" type=\"hidden\" value=\"1\" />\n<input id=\"param_2\" name=\"param_2\" type=\"hidden\" value=\"2\" />")
+			html_fragment = Nokogiri::HTML(helper.hide_current_params)
 			
-			expect(Nokogiri::HTML(helper.hide_current_params)).to be_equivalent_to(expected_html)
+			expect(
+				html_fragment.at_css("input[type='hidden'][name='param_1'][value='1']")
+			).not_to be_nil
+
+			expect(
+				html_fragment.at_css("input[type='hidden'][name='param_2'][value='2']")
+			).not_to be_nil
 		end
 
 		it "does not return any parameters specified in the 'suppress' argument" do
 			controller.request.query_parameters[:unwanted_1] = "unwanted"
 			controller.request.query_parameters[:unwanted_2] = "unwanted"
 			
-			expected_html = Nokogiri::HTML("<input id=\"param_1\" name=\"param_1\" type=\"hidden\" value=\"1\" />\n<input id=\"param_2\" name=\"param_2\" type=\"hidden\" value=\"2\" />")
-			expect(Nokogiri::HTML(helper.hide_current_params("unwanted_1", "unwanted_2")))
-				.to be_equivalent_to(expected_html)
+			expect(helper.hide_current_params("unwanted_1", "unwanted_2"))
+				.not_to include("unwanted")
 		end
 
 	end
